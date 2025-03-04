@@ -14,7 +14,10 @@ import java.awt.geom.RoundRectangle2D
 import kotlin.math.max
 import kotlin.math.min
 
-class SolidButton(val x: Int, val y: Int, val w: Int, val h: Int, val text: String, val isPrimary: Boolean, val clickAction: () -> Unit): Element() {
+class SolidButton(val x: Int, val y: Int, val w: Int, val h: Int,
+                  val text: String, val isPrimary: Boolean, var isDisabled: Boolean = false,
+                  val clickAction: () -> Unit
+): Element() {
 
     val isHovered get() = localMousePosition.x in x..x+w && localMousePosition.y in y..y+h
     var hoverProgress = 0.0
@@ -24,11 +27,14 @@ class SolidButton(val x: Int, val y: Int, val w: Int, val h: Int, val text: Stri
 
     val glyph = (if (isPrimary) archivoBlack else archivoBlackItalic).getGlyph(h.toDouble()/2, text.uppercase())
 
-    val widthOffset get() = w*activeProgress*0.01
-    val heightOffset get() = h*activeProgress*0.01
+    val widthOffset get() = if (isDisabled) 0.0 else w*activeProgress*0.01
+    val heightOffset get() = if (isDisabled) 0.0 else h*activeProgress*0.01
 
     override fun draw(g: Graphics2D) {
-        g.color = if (isPrimary) Color(246, 255, 19) else Color(205, 231, 255)
+
+        g.color = if (isDisabled) Color(76, 85, 99)
+            else if (isPrimary) Color(246, 255, 19)
+            else Color(205, 231, 255)
         g.fill(RoundRectangle2D.Double(
             x.toDouble() + widthOffset,
             y.toDouble() + heightOffset,
@@ -38,14 +44,14 @@ class SolidButton(val x: Int, val y: Int, val w: Int, val h: Int, val text: Stri
             30.0
         ))
 
-        g.color = Color(9, 8, 21)
-        if (activeProgress <= 0.0) g.drawGlyphVector(glyph.coreGlyph, x + (w-glyph.width).toFloat()/2, y + (h+glyph.height).toFloat()/2)
+        g.color = Color(15, 13, 28)
+        if (activeProgress <= 0.0 || isDisabled) g.drawGlyphVector(glyph.coreGlyph, x + (w-glyph.width).toFloat()/2, y + (h+glyph.height).toFloat()/2)
         else {
             val resizedGlyph = (if (isPrimary) archivoBlack else archivoBlackItalic).getGlyph((h.toDouble()/2)*(1 - activeProgress*0.04), text.uppercase())
             g.drawGlyphVector(resizedGlyph.coreGlyph, x + (w-resizedGlyph.width).toFloat()/2, y + (h+resizedGlyph.height).toFloat()/2)
         }
 
-        if (hoverProgress <= 0.0) return
+        if (hoverProgress <= 0.0 || isDisabled) return
 
         g.color = Color(255, 255, 255, (20*hoverProgress).toInt())
         g.fill(getOutlineShape(9, 7))
@@ -96,6 +102,7 @@ class SolidButton(val x: Int, val y: Int, val w: Int, val h: Int, val text: Stri
 
     override fun onClick() {
         if (!isHovered) return
+        if (isDisabled) return
         clickAction()
     }
 }

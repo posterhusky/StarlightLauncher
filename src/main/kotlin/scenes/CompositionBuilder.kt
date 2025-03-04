@@ -1,0 +1,83 @@
+package net.vanolex.scenes
+
+import net.vanolex.fonts.archivoBlack
+import net.vanolex.fonts.archivoMedium
+import net.vanolex.fonts.archivoMediumItalic
+import net.vanolex.graphics.*
+import net.vanolex.graphics.elements.Text
+import java.awt.Color
+import java.awt.Image
+
+object CompositionBuilder {
+    fun buildDialogue(
+        title: String, lore: String, hasSpinner: Boolean = false,
+        primaryButtonText: String? = null, primaryButtonAction: (() -> Unit)? = null,
+        secondaryButtonText: String? = null, secondaryButtonAction: (() -> Unit)? = null,
+    ): Composition {
+        val titleglyph = archivoBlack.getGlyph(45, title)
+        val loreElement = MultilineText(lore, archivoMedium, 540, 18, 230, 180)
+        val hasPBtn = primaryButtonText != null || primaryButtonAction != null
+        val hasSBtn = secondaryButtonText != null || secondaryButtonAction != null
+
+        val composition = Composition(
+            Shade(200, 40, 600, 540, 40),
+            Text(titleglyph, (1000-titleglyph.width)/2, 90, Color.WHITE),
+            loreElement,
+        )
+
+        if (hasSpinner) {
+            composition.addElements(
+                LoadingSpinner(500,
+                (
+                        loreElement.y+loreElement.height +
+                                if (hasPBtn && hasSBtn) 415
+                                else 480
+                        )/2 - 25
+            )
+            )
+        }
+
+        if (hasPBtn) {
+            composition.addElements(
+                SolidButton(220, if (hasSBtn) 415 else 480, 560, 70,
+                primaryButtonText ?: "", isPrimary = true, isDisabled = false, primaryButtonAction ?: {})
+            )
+        }
+
+        if (hasSBtn) {
+            composition.addElements(
+                SolidButton(220, if (hasPBtn) 500 else 480, 560, if (hasPBtn) 50 else 70,
+                secondaryButtonText ?: "", isPrimary = false, isDisabled = false, secondaryButtonAction ?: {})
+            )
+        }
+
+        return composition
+    }
+
+    fun stepDialogue(
+        title: String, lore: String, image: Image? = null,
+        page: Int, maxPages: Int, modPage: (Int) -> Unit
+    ): Composition {
+        val titleglyph = archivoBlack.getGlyph(45, title)
+        val pageGlyph = archivoMediumItalic.getGlyph(20, "$page/$maxPages")
+        val loreElement = MultilineText(lore, archivoMedium, 540, 18, 230, 180)
+        val compostition = Composition(
+            Shade(200, 40, 600, 530, 40),
+            Text(titleglyph, (1000-titleglyph.width)/2, 90, Color.WHITE),
+            loreElement,
+            SolidButton(220, 480, 560, 70, "SELECT FOLDER", isPrimary = true) {},
+            SolidButton(220, 415, 50, 50, "<", isPrimary = false, isDisabled = page <= 1) {modPage(-1)},
+            SolidButton(730, 415, 50, 50, ">", isPrimary = false, isDisabled = page >= maxPages) {modPage(1)},
+            Text(pageGlyph, (1000-pageGlyph.width)/2, 430, Color.WHITE),
+        )
+
+        if (image != null) compostition.addElements(
+            CustomDraw({true}) {
+                it.drawImage(image, 500-image.getWidth(null)/2, (loreElement.height + 595 + image.getHeight(null))/2, null)
+            }
+        )
+
+        return compostition
+    }
+
+}

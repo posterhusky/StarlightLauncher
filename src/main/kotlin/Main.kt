@@ -14,11 +14,11 @@ suspend fun main() = coroutineScope {
     var lastFrame = 0L
     while (isRunning) {
         val now = System.nanoTime()
-        if (now - lastFrame >= 16666666) {
+        if (now - lastFrame >= 1000000000/60.0) {
             Panel.tick()
             lastFrame = now
         }
-        while (!Window.isFocused && Panel.scene !is LogoScene) {
+        while (!Window.isFocused && isRunning) {
             delay(100)
         }
     }

@@ -4,7 +4,6 @@ import net.vanolex.epicapi.AsyncTask
 import net.vanolex.epicapi.UserInitialisation
 import net.vanolex.fonts.archivoBlack
 import net.vanolex.fonts.archivoMedium
-import net.vanolex.getDialogue
 import net.vanolex.graphics.*
 import net.vanolex.graphics.elements.Text
 import java.awt.Color
@@ -40,7 +39,7 @@ class QuickLaunch: Scene() {
         }
     }
 
-    val infoComposition = getDialogue("LINK YOUR ACCOUNT",
+    val infoComposition = CompositionBuilder.buildDialogue("LINK YOUR ACCOUNT",
         "To sign into Fortnite, you'll need to link your Epic account. Continuing will open a browser window " +
             "directing you to the official Epic Games website where you can complete the sign-in process.",
         primaryButtonText = "CONTINUE",
@@ -49,14 +48,14 @@ class QuickLaunch: Scene() {
         secondaryButtonAction = { TODO("Main menu") }
     )
 
-    val fetchingComposition = getDialogue("WAITING FOR LOGIN...",
+    val fetchingComposition = CompositionBuilder.buildDialogue("WAITING FOR LOGIN...",
         "The Epic Games login page was opened in your browser. Once you've signed in, this window will refresh automatically.",
         hasSpinner = true,
         secondaryButtonText = "CANCEL",
         secondaryButtonAction = { TODO("Main menu") }
     )
 
-    val failComposition = getDialogue("UNEXPECTED ERROR",
+    val failComposition = CompositionBuilder.buildDialogue("UNEXPECTED ERROR",
         "An unexpected error occurred during the login process. Please try again.",
         primaryButtonText = "TRY AGAIN",
         primaryButtonAction = {state = State.FETCHING},

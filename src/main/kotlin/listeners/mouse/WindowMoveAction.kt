@@ -13,10 +13,6 @@ class WindowMoveAction(relativeClickStart: Point): MouseAction(relativeClickStar
     val offsetVector = Window.location - globalClickStart
 
     override fun tick() {
-        val screenSize = Toolkit.getDefaultToolkit().getScreenSize()
-        val point = MouseInfo.getPointerInfo().location + offsetVector
-        point.x = min(max(point.x, 0), screenSize.width - Window.width)
-        point.y = min(max(point.y, 0), screenSize.height - Window.height)
-        Window.location = point
+        Window.location = MouseInfo.getPointerInfo().location + offsetVector
     }
 }
