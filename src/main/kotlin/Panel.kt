@@ -1,8 +1,8 @@
 package net.vanolex
 
-import net.vanolex.scenes.LogoScene
-import net.vanolex.scenes.QuickLaunch
+
 import net.vanolex.scenes.Scene
+import net.vanolex.scenes.SelectFortniteDialogue
 import java.awt.Graphics
 import java.awt.Graphics2D
 import javax.imageio.ImageIO
@@ -13,7 +13,7 @@ object Panel: JPanel() {
     val backgroundBlur by lazy { ImageIO.read(javaClass.getResourceAsStream("/img/background-darken.png")) }
     val loadingSpinner by lazy { ImageIO.read(javaClass.getResourceAsStream("/img/loading-spinner.png")) }
 
-    var scene: Scene = LogoScene()
+    var scene: Scene = SelectFortniteDialogue()
 
     public override fun paintComponent(g: Graphics) {
         scene.draw(g as Graphics2D)

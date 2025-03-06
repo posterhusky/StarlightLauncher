@@ -1,16 +1,12 @@
 package net.vanolex.scenes
 
-import net.vanolex.Window
 import net.vanolex.fonts.archivoBlack
 import net.vanolex.fonts.archivoMedium
 import net.vanolex.fonts.archivoMediumItalic
 import net.vanolex.graphics.*
 import net.vanolex.graphics.elements.Text
 import java.awt.Color
-import java.awt.FileDialog
 import java.awt.Image
-import java.io.File
-import javax.swing.JFileChooser
 
 object CompositionBuilder {
     fun buildDialogue(
@@ -69,9 +65,7 @@ object CompositionBuilder {
             Shade(200, 40, 600, 530, 40),
             Text(titleglyph, (1000-titleglyph.width)/2, 90, Color.WHITE),
             loreElement,
-            SolidButton(220, 480, 560, 70, "SELECT FOLDER", isPrimary = true) {
-                scene.explorerTask.launchTask()
-            },
+            SolidButton(220, 480, 560, 70, "SELECT FOLDER", isPrimary = true) { scene.openExplorer() },
             SolidButton(220, 415, 50, 50, "<", isPrimary = false, isDisabled = page <= 1) {scene.page -= 1},
             SolidButton(730, 415, 50, 50, ">", isPrimary = false, isDisabled = page >= maxPages) {scene.page += 1},
             Text(pageGlyph, (1000-pageGlyph.width)/2, 430, Color.WHITE),

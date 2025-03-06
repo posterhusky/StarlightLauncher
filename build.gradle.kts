@@ -12,6 +12,7 @@ var coroutines_version = "1.9.0-RC.2"
 
 repositories {
     mavenCentral()
+    maven(url = "https://jitpack.io")
 }
 
 dependencies {
@@ -23,6 +24,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutines_version")
     implementation("com.google.code.gson:gson:2.12.1")
     implementation("ch.qos.logback:logback-classic:1.5.17")
+    implementation("com.github.steos:jnafilechooser:1.1.2")
 }
 
 tasks.test {

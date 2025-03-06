@@ -1,12 +1,11 @@
 package net.vanolex.scenes
 
-import net.vanolex.tasks.SelectFileTask
+import jnafilechooser.api.JnaFileChooser
+import net.vanolex.Window
 
 class SelectFortniteDialogue: Scene() {
 
     var page = 1
-
-    val explorerTask = SelectFileTask()
 
     val step1Composition = CompositionBuilder.stepDialogue(
         "FORTNITE NOT FOUND",
@@ -42,5 +41,15 @@ class SelectFortniteDialogue: Scene() {
     }
 
     override fun update() {}
+
+    fun openExplorer() {
+        val fc = JnaFileChooser()
+        fc.addFilter("All Files", "*")
+        fc.addFilter("Pictures", "jpg", "jpeg", "png", "gif", "bmp")
+        if (fc.showOpenDialog(Window)) {
+            val f = fc.selectedFile
+            // do something with f
+        }
+    }
 
 }
