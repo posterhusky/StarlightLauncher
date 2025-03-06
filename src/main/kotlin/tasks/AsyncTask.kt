@@ -12,6 +12,7 @@ abstract class AsyncTask {
     var status: TaskStatus = TaskStatus.WAITING
 
     fun launchTask() {
+        if (status == TaskStatus.IN_PROGRESS) return
         job = scope.launch {
             status = TaskStatus.IN_PROGRESS
             try {
