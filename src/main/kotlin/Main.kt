@@ -5,7 +5,6 @@ import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import net.vanolex.scenes.LogoScene
 
 suspend fun main() = coroutineScope {
     client = HttpClient(OkHttp)

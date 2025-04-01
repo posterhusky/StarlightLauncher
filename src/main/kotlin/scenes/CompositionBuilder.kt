@@ -55,27 +55,38 @@ object CompositionBuilder {
     }
 
     fun stepDialogue(
-        title: String, lore: String, image: Image? = null,
-        page: Int, maxPages: Int, scene: SelectFortniteDialogue
+        title: String, lore: () -> String, image: () -> Image? = { null },
+        maxPages: Int, scene: SelectFortniteDialogue
     ): Composition {
         val titleglyph = archivoBlack.getGlyph(45, title)
-        val pageGlyph = archivoMediumItalic.getGlyph(20, "$page/$maxPages")
-        val loreElement = MultilineText(lore, archivoMedium, 540, 18, 230, 180)
+        val pageGlyph = { archivoMediumItalic.getGlyph(20, "${scene.page}/$maxPages") }
+        val loreElement = DynamicMultilineText(lore, archivoMedium, 540, 18, 230, 180)
+        lateinit var prevBtn: SolidButton
+        lateinit var nextBtn: SolidButton
+        prevBtn = SolidButton(220, 415, 50, 50, "<", isPrimary = false, isDisabled = scene.page <= 1) {
+            scene.page -= 1
+            prevBtn.isDisabled = scene.page <= 1
+            nextBtn.isDisabled = scene.page >= maxPages
+        }
+        nextBtn = SolidButton(730, 415, 50, 50, ">", isPrimary = false, isDisabled = scene.page >= maxPages) {
+            scene.page += 1
+            prevBtn.isDisabled = scene.page <= 1
+            nextBtn.isDisabled = scene.page >= maxPages
+        }
         val compostition = Composition(
             Shade(200, 40, 600, 530, 40),
             Text(titleglyph, (1000-titleglyph.width)/2, 90, Color.WHITE),
             loreElement,
-            SolidButton(220, 480, 560, 70, "SELECT FOLDER", isPrimary = true) { scene.openExplorer() },
-            SolidButton(220, 415, 50, 50, "<", isPrimary = false, isDisabled = page <= 1) {scene.page -= 1},
-            SolidButton(730, 415, 50, 50, ">", isPrimary = false, isDisabled = page >= maxPages) {scene.page += 1},
-            Text(pageGlyph, (1000-pageGlyph.width)/2, 430, Color.WHITE),
+            SolidButton(220, 480, 560, 70, "SELECT FILE", isPrimary = true) { scene.openExplorer() },
+            prevBtn,
+            nextBtn,
+            DynamicText(pageGlyph, { (1000 - pageGlyph().width) / 2 }, { 430 }, Color.WHITE),
         )
 
-        if (image != null) compostition.addElements(
-            CustomDraw({true}) {
-                it.drawImage(image, 500-image.getWidth(null)/2, (loreElement.height + 595 + image.getHeight(null))/2, null)
-            }
-        )
+        CustomDraw(image) {
+            val img = image() ?: return@CustomDraw
+            it.drawImage(img, 500-img.getWidth(null)/2, (loreElement.height + 595 + img.getHeight(null))/2, null)
+        }
 
         return compostition
     }

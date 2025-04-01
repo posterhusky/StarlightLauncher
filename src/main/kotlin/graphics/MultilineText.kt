@@ -9,18 +9,19 @@ class MultilineText(text: String, fontImplementation: FontImplementation, val ma
     val height get() = (glyphList.size * size.toDouble() * 1.2).toInt()
 
     init {
-        var currentLine = ""
-
-        for (i in text.split(" ")) {
-            val tempGlyph = fontImplementation.getGlyph(size, ("$currentLine $i").removePrefix(" "))
-            if (tempGlyph.width <= maxWith) {
-                currentLine += " $i"
-                continue
+        for (p in text.split("\n")){
+            var currentLine = ""
+            for (i in p.split(" ")) {
+                val tempGlyph = fontImplementation.getGlyph(size, ("$currentLine $i").removePrefix(" "))
+                if (tempGlyph.width <= maxWith) {
+                    currentLine += " $i"
+                    continue
+                }
+                glyphList.add(fontImplementation.getGlyph(size, currentLine))
+                currentLine = i
             }
             glyphList.add(fontImplementation.getGlyph(size, currentLine))
-            currentLine = i
         }
-        glyphList.add(fontImplementation.getGlyph(size, currentLine))
     }
 
     override fun draw(g: Graphics2D) {

@@ -1,6 +1,5 @@
 package net.vanolex.graphics
 
-import net.vanolex.Window
 import net.vanolex.fonts.archivoBlack
 import net.vanolex.fonts.archivoBlackItalic
 import net.vanolex.listeners.MouseListener
@@ -9,14 +8,14 @@ import net.vanolex.localMousePosition
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.geom.Area
-import java.awt.geom.Rectangle2D
 import java.awt.geom.RoundRectangle2D
 import kotlin.math.max
 import kotlin.math.min
 
-class SolidButton(val x: Int, val y: Int, val w: Int, val h: Int,
-                  val text: String, val isPrimary: Boolean, var isDisabled: Boolean = false,
-                  val clickAction: () -> Unit
+class SolidButton(
+    val x: Int, val y: Int, val w: Int, val h: Int,
+    val text: String, val isPrimary: Boolean, var isDisabled: Boolean = false,
+    val clickAction: () -> Unit
 ): Element() {
 
     val isHovered get() = localMousePosition.x in x..x+w && localMousePosition.y in y..y+h
@@ -27,8 +26,8 @@ class SolidButton(val x: Int, val y: Int, val w: Int, val h: Int,
 
     val glyph = (if (isPrimary) archivoBlack else archivoBlackItalic).getGlyph(h.toDouble()/2, text.uppercase())
 
-    val widthOffset get() = if (isDisabled) 0.0 else w*activeProgress*0.01
-    val heightOffset get() = if (isDisabled) 0.0 else h*activeProgress*0.01
+    val widthOffset get() = if (isDisabled) 0.0 else w*activeProgress*0.015
+    val heightOffset get() = if (isDisabled) 0.0 else h*activeProgress*0.015
 
     override fun draw(g: Graphics2D) {
 

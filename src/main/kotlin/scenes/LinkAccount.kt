@@ -8,7 +8,7 @@ import net.vanolex.graphics.*
 import net.vanolex.graphics.elements.Text
 import java.awt.Color
 
-class QuickLaunch: Scene() {
+class LinkAccount: Scene() {
 
     private var state = State.INFO
     var networkTask = UserInitialisation()

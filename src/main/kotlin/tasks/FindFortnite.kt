@@ -53,7 +53,7 @@ class FindFortnite: AsyncTask() {
     fun testPath(path: String): Boolean {
         val file = File(path)
         if (!file.exists()) return false
-        if (!path.replace("\\", "/").endsWith("Binaries/Win64/FortniteLauncher.exe")) return false
+        if (!path.replace("\\", "/").endsWith("FortniteGame/Binaries/Win64/FortniteLauncher.exe")) return false
         return true
     }
 }
