@@ -1,5 +1,6 @@
 package net.vanolex.scenes
 
+import net.vanolex.Panel
 import net.vanolex.epicapi.AsyncTask
 import net.vanolex.epicapi.UserInitialisation
 import net.vanolex.fonts.archivoBlack
@@ -12,8 +13,6 @@ class LinkAccount: Scene() {
 
     private var state = State.INFO
     var networkTask = UserInitialisation()
-
-    val fetchingGlyph = archivoBlack.getGlyph(45, "WAITING FOR LOGIN...")
 
     override fun update() {
         if (state == State.FETCHING) {
@@ -32,7 +31,7 @@ class LinkAccount: Scene() {
                     MultilineText("Login successful! Your account is now linked. You can save it to skip authentication next time or launch Fortnite without saving.", archivoMedium, 540, 18, 230, 340),
                     ProfilePicture(500, 155, networkTask.profileIcon),
                     SolidButton(220, 415, 560, 70, "SAVE", true) {},
-                    SolidButton(220, 500, 560, 50, "LAUNCH", isPrimary = false) {},
+                    SolidButton(220, 500, 560, 50, "LAUNCH", isPrimary = false) { Panel.scene = LaunchFortniteScene(networkTask.accountId, networkTask.exchangeToken) },
                 )
                 state = State.SUCCESS
             }
@@ -45,14 +44,14 @@ class LinkAccount: Scene() {
         primaryButtonText = "CONTINUE",
         primaryButtonAction = {state = State.FETCHING},
         secondaryButtonText = "CANCEL",
-        secondaryButtonAction = { TODO("Main menu") }
+        secondaryButtonAction = { Panel.scene = MainMenuScene() }
     )
 
     val fetchingComposition = CompositionBuilder.buildDialogue("WAITING FOR LOGIN...",
         "The Epic Games login page was opened in your browser. Once you've signed in, this window will refresh automatically.",
         hasSpinner = true,
         secondaryButtonText = "CANCEL",
-        secondaryButtonAction = { TODO("Main menu") }
+        secondaryButtonAction = { Panel.scene = MainMenuScene() }
     )
 
     val failComposition = CompositionBuilder.buildDialogue("UNEXPECTED ERROR",
@@ -60,7 +59,7 @@ class LinkAccount: Scene() {
         primaryButtonText = "TRY AGAIN",
         primaryButtonAction = {state = State.FETCHING},
         secondaryButtonText = "CANCEL",
-        secondaryButtonAction = { TODO("Main menu") }
+        secondaryButtonAction = { Panel.scene = MainMenuScene() }
     )
 
     lateinit var successComposition: Composition

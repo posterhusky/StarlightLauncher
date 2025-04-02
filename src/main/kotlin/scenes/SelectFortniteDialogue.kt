@@ -2,12 +2,10 @@ package net.vanolex.scenes
 
 import jnafilechooser.api.JnaFileChooser
 import net.vanolex.Panel
-import net.vanolex.Panel.scene
 import net.vanolex.Window
 import net.vanolex.config
 import net.vanolex.fonts.archivoBlack
 import net.vanolex.fonts.archivoMedium
-import net.vanolex.fonts.archivoMediumItalic
 import net.vanolex.graphics.*
 import net.vanolex.graphics.elements.Text
 import java.awt.Color
@@ -63,7 +61,6 @@ class SelectFortniteDialogue: Scene() {
             error = "While opening a file the following error occured: The file that you selected does not exist anymore. Please try again."
             return
         }
-        print(file.absolutePath)
         if (!file.absolutePath.replace("\\", "/").endsWith("FortniteLauncher.exe")) {
             error = "While opening a file the following error occured: The file that you selected doesn't seem to be the fortnite launcher. Make sure that you select the \"FortniteLauncher.exe\" file."
             return
