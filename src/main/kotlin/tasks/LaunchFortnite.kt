@@ -11,9 +11,13 @@ import java.util.*
 
 class LaunchFortnite(val accountId: String, val exchangeToken: String): AsyncTask() {
     override suspend fun task() {
-        delay(1000)
-        val process = ProcessBuilder(
-            config.fortnitePath,
+        ProcessBuilder(
+            "cmd.exe",
+            "/C",
+            "start",
+            "/d",
+            config.fortnitePath.removeSuffix("FortniteLauncher.exe"),
+            "FortniteLauncher.exe",
             "-AUTH_LOGIN=unused",
             "-AUTH_PASSWORD=$exchangeToken",
             "-AUTH_TYPE=exchangecode",
@@ -22,6 +26,8 @@ class LaunchFortnite(val accountId: String, val exchangeToken: String): AsyncTas
             "-EpicPortal",
             "-epicuserid=$accountId"
         ).start()
+
+        delay(1000)
         status = TaskStatus.SUCCESS
     }
 }

@@ -13,7 +13,7 @@ class LoadConfig : AsyncTask() {
         } catch (e: Exception) {
             Config(
                 "C:/Program Files/Epic Games/Fortnite/FortniteGame/Binaries/Win64/FortniteLauncher.exe",
-                true,
+                false,
             )
         }
         config.save()

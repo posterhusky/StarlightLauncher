@@ -40,9 +40,9 @@ class LogoScene: Scene() {
             )
 
             if (sceneFrames120 > 560) {
-//                if (findFortniteTask.status == AsyncTask.TaskStatus.SUCCESS) Panel.scene = LinkAccount()
-//                if (findFortniteTask.status == AsyncTask.TaskStatus.FAILED) Panel.scene = SelectFortniteDialogue()
-                Panel.scene = SelectFortniteDialogue()
+                if (findFortniteTask.status == AsyncTask.TaskStatus.SUCCESS) Panel.scene = LinkAccount()
+                if (findFortniteTask.status == AsyncTask.TaskStatus.FAILED) Panel.scene = SelectFortniteDialogue()
+//                Panel.scene = SelectFortniteDialogue()
                 return composition
             }
 

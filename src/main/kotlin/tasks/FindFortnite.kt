@@ -14,14 +14,15 @@ class FindFortnite: AsyncTask() {
 
         try {
             definePath(extractPathFromEASLogs())
-            status = TaskStatus.SUCCESS
         } catch (e: Exception) {
+            e.printStackTrace()
             status = TaskStatus.FAILED
         }
     }
 
     fun definePath(path: String) {
         config.fortnitePath = path
+        config.save()
         status = TaskStatus.SUCCESS
     }
 
@@ -43,7 +44,6 @@ class FindFortnite: AsyncTask() {
             val removedPrefix = logText.split(prefix).getOrNull(1) ?: continue
             val launcherFolder = removedPrefix.split(suffix).getOrNull(0) ?: continue
             val finalPath = launcherFolder + "FortniteLauncher.exe"
-
             if (!File(finalPath).exists()) continue
             return finalPath
         }

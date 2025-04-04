@@ -1,6 +1,7 @@
 package net.vanolex.scenes
 
 import net.vanolex.Panel
+import net.vanolex.config
 import net.vanolex.epicapi.AsyncTask
 import net.vanolex.epicapi.LaunchFortnite
 import net.vanolex.graphics.Composition
@@ -34,5 +35,6 @@ class LaunchFortniteScene(val accountId: String, val exchangeToken: String): Sce
 
     override fun update() {
         if (launchTask.status == AsyncTask.TaskStatus.WAITING) launchTask.launchTask()
+        if (launchTask.status == AsyncTask.TaskStatus.SUCCESS && config.closeAfterLaunch) isRunning = false
     }
 }
