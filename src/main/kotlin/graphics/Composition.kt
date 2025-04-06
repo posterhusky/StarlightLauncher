@@ -25,4 +25,8 @@ class Composition(vararg elements: Element): Element() {
     override fun onClick() {
         elements.forEach { it.onClick() }
     }
+
+    override fun onScroll(amount: Int) {
+        elements.forEach { it.onScroll(amount) }
+    }
 }

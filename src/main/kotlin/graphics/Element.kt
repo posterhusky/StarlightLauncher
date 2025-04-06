@@ -9,5 +9,7 @@ abstract class Element {
 
     open fun onClick() {}
 
+    open fun onScroll(amount: Int) {}
+
     open var canSkipRender: Boolean = true
 }

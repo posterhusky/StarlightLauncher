@@ -3,21 +3,20 @@ package net.vanolex
 import com.google.gson.Gson
 import io.ktor.client.*
 import kotlinx.coroutines.Job
-import net.vanolex.fonts.archivoBlack
-import net.vanolex.fonts.archivoMedium
-import net.vanolex.graphics.*
-import net.vanolex.graphics.elements.Text
-import java.awt.Color
+import net.vanolex.tasks.LoadAccounts
 import java.awt.MouseInfo
 import java.awt.Point
 
 val switchAuth = "OThmN2U0MmMyZTNhNGY4NmE3NGViNDNmYmI0MWVkMzk6MGEyNDQ5YTItMDAxYS00NTFlLWFmZWMtM2U4MTI5MDFjNGQ3"
 val pcAuth = "ZWM2ODRiOGM2ODdmNDc5ZmFkZWEzY2IyYWQ4M2Y1YzY6ZTFmMzFjMjExZjI4NDEzMTg2MjYyZDM3YTEzZmM4NGQ="
+val androidAuth = "M2Y2OWU1NmM3NjQ5NDkyYzhjYzI5ZjFhZjA4YThhMTI6YjUxZWU5Y2IxMjIzNGY1MGE2OWVmYTY3ZWY1MzgxMmU="
 val gson = Gson()
 
 lateinit var client: HttpClient
+lateinit var accounts: MutableList<Account>
+val isAccountsInitialized get() = ::accounts.isInitialized
 
-lateinit var mainThread: Job
+val loadAccountsTask = LoadAccounts()
 
 val localMousePosition get() = Window.mousePosition ?: Point(-1, -1)
 val globalMousePosition get() = MouseInfo.getPointerInfo().location

@@ -9,12 +9,12 @@ import io.ktor.util.*
 import net.vanolex.client
 import net.vanolex.gson
 import net.vanolex.pcAuth
-import java.awt.Image
+import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import javax.imageio.ImageIO
 
-object ProfileIconLoader {
-    suspend fun getProfileIcon(accessToken: String, accountId: String): Image {
+object ProfilePictureLoader {
+    suspend fun getProfileIcon(accessToken: String, accountId: String): BufferedImage {
         var response =
             client.post("https://api.epicgames.dev/auth/v1/oauth/token") {
                 headers {
@@ -57,7 +57,7 @@ object ProfileIconLoader {
 
         val img = ImageIO.read(ByteArrayInputStream(response.bodyAsBytes()))
 
-        return img.getScaledInstance(140, 140, Image.SCALE_SMOOTH)
+        return img
 
     }
 

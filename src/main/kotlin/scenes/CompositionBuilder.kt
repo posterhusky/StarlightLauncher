@@ -61,25 +61,13 @@ object CompositionBuilder {
         val titleglyph = archivoBlack.getGlyph(45, title)
         val pageGlyph = { archivoMediumItalic.getGlyph(20, "${scene.page}/$maxPages") }
         val loreElement = DynamicMultilineText(lore, archivoMedium, 540, 18, 230, 180)
-        lateinit var prevBtn: SolidButton
-        lateinit var nextBtn: SolidButton
-        prevBtn = SolidButton(220, 415, 50, 50, "<", isPrimary = false, isDisabled = scene.page <= 1) {
-            scene.page -= 1
-            prevBtn.isDisabled = scene.page <= 1
-            nextBtn.isDisabled = scene.page >= maxPages
-        }
-        nextBtn = SolidButton(730, 415, 50, 50, ">", isPrimary = false, isDisabled = scene.page >= maxPages) {
-            scene.page += 1
-            prevBtn.isDisabled = scene.page <= 1
-            nextBtn.isDisabled = scene.page >= maxPages
-        }
         val compostition = Composition(
             Shade(200, 40, 600, 530, 40),
             Text(titleglyph, (1000-titleglyph.width)/2, 90, Color.WHITE),
             loreElement,
             SolidButton(220, 480, 560, 70, "SELECT FILE", isPrimary = true) { scene.openExplorer() },
-            prevBtn,
-            nextBtn,
+            SolidButton(220, 415, 50, 50, { "<" }, isPrimary = false, isDisabled = { scene.page <= 1 }) {scene.page -= 1},
+            SolidButton(730, 415, 50, 50, { ">" }, isPrimary = false, isDisabled = { scene.page >= maxPages }) {scene.page += 1},
             DynamicText(pageGlyph, { (1000 - pageGlyph().width) / 2 }, { 430 }, Color.WHITE),
         )
 

@@ -71,7 +71,7 @@ class SelectFortniteDialogue: Scene() {
         }
         config.fortnitePath = file.absolutePath
         config.save()
-        Panel.scene = LinkAccount()
+        Panel.scene = MainMenuScene()
     }
 
 }

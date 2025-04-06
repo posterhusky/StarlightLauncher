@@ -1,33 +1,38 @@
 package net.vanolex.scenes
 
 import net.vanolex.Panel
-import net.vanolex.epicapi.AsyncTask
+import net.vanolex.epicapi.Task
 import net.vanolex.fonts.introFont
 import net.vanolex.fonts.nougatFont
 import net.vanolex.frames
 import net.vanolex.graphics.Composition
 import net.vanolex.graphics.elements.ScreenFill
 import net.vanolex.graphics.elements.Text
+import net.vanolex.loadAccountsTask
 import net.vanolex.tasks.FindFortnite
 import net.vanolex.tasks.LoadConfig
 import java.awt.Color
 import kotlin.math.abs
 
 class LogoScene: Scene() {
+    override val isImportant = true
+
     val presentsGlyph = introFont.getGlyph(50f, "PRESENTS")
 
     val loadConfigTask = LoadConfig()
     val findFortniteTask = FindFortnite()
 
     override fun update() {
-        if (loadConfigTask.status == AsyncTask.TaskStatus.WAITING) {
-            loadConfigTask.launchTask()
+        if (loadAccountsTask.status == Task.TaskStatus.WAITING) loadAccountsTask.launchTaskAsync()
+
+        if (loadConfigTask.status == Task.TaskStatus.WAITING) {
+            loadConfigTask.launchTaskAsync()
             return
         }
 
-        if (loadConfigTask.status != AsyncTask.TaskStatus.SUCCESS) return
+        if (loadConfigTask.status != Task.TaskStatus.SUCCESS) return
 
-        if (findFortniteTask.status == AsyncTask.TaskStatus.WAITING) findFortniteTask.launchTask()
+        if (findFortniteTask.status == Task.TaskStatus.WAITING) findFortniteTask.launchTaskAsync()
     }
 
     override val composition: Composition
@@ -40,8 +45,8 @@ class LogoScene: Scene() {
             )
 
             if (sceneFrames120 > 560) {
-                if (findFortniteTask.status == AsyncTask.TaskStatus.SUCCESS) Panel.scene = LinkAccount()
-                if (findFortniteTask.status == AsyncTask.TaskStatus.FAILED) Panel.scene = SelectFortniteDialogue()
+                if (findFortniteTask.status == Task.TaskStatus.SUCCESS) Panel.scene = MainMenuScene()
+                if (findFortniteTask.status == Task.TaskStatus.FAILED) Panel.scene = SelectFortniteDialogue()
 //                Panel.scene = SelectFortniteDialogue()
                 return composition
             }

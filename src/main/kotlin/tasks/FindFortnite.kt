@@ -1,11 +1,10 @@
 package net.vanolex.tasks
 
-import jdk.internal.org.jline.utils.Colors.s
 import net.vanolex.config
-import net.vanolex.epicapi.AsyncTask
+import net.vanolex.epicapi.Task
 import java.io.File
 
-class FindFortnite: AsyncTask() {
+class FindFortnite: Task() {
     override suspend fun task() {
         if (testPath(config.fortnitePath)) {
             status = TaskStatus.SUCCESS

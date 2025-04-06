@@ -9,15 +9,15 @@ import net.vanolex.client
 import net.vanolex.gson
 import net.vanolex.switchAuth
 import java.awt.Desktop
-import java.awt.Image
+import java.awt.image.BufferedImage
 import java.net.URI
 
-class UserInitialisation: AsyncTask() {
+class UserInitialisation: Task() {
 
     lateinit var exchangeToken: String
     lateinit var accountId: String
     lateinit var displayName: String
-    lateinit var profileIcon: Image
+    lateinit var profilePicture: BufferedImage
 
     override suspend fun task() {
         var response: HttpResponse
@@ -54,8 +54,8 @@ class UserInitialisation: AsyncTask() {
 
         // Wait until response is 200 or an unexpected error happens
         while (true) {
+            delay(10000) // wait 10 sec
             response = client.post("https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/token") {
-                delay(11000) // wait 11 sec
                 headers {
                     append("Content-Type", "application/x-www-form-urlencoded")
                     append("Authorization", "basic $switchAuth")
@@ -78,7 +78,7 @@ class UserInitialisation: AsyncTask() {
         val accessToken = jsonResponse["access_token"].asString
         accountId = jsonResponse["account_id"].asString
         displayName = jsonResponse["displayName"].asString
-        profileIcon = ProfileIconLoader.getProfileIcon(accessToken, accountId)
+        profilePicture = ProfilePictureLoader.getProfileIcon(accessToken, accountId)
 
         response = client.get("https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/exchange") {
             headers {

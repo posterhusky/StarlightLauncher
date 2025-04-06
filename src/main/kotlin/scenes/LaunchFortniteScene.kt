@@ -2,14 +2,18 @@ package net.vanolex.scenes
 
 import net.vanolex.Panel
 import net.vanolex.config
-import net.vanolex.epicapi.AsyncTask
+import net.vanolex.epicapi.Task
 import net.vanolex.epicapi.LaunchFortnite
 import net.vanolex.graphics.Composition
 import net.vanolex.isRunning
+import net.vanolex.tasks.BasicTask
 
-class LaunchFortniteScene(val accountId: String, val exchangeToken: String): Scene() {
+class LaunchFortniteScene(accountId: String, exchangeTokenTask: BasicTask<String>): Scene() {
+    constructor(accountId: String, exchangeToken: String): this(accountId, BasicTask { exchangeToken })
 
-    val launchTask = LaunchFortnite(accountId, exchangeToken)
+    override val isImportant = true
+
+    val launchTask = LaunchFortnite(accountId, exchangeTokenTask)
 
     val loadingComposition = CompositionBuilder.buildDialogue("LAUNCHING...", "", true)
     val failComposition = CompositionBuilder.buildDialogue("UNEXPECTED ERROR",
@@ -28,13 +32,13 @@ class LaunchFortniteScene(val accountId: String, val exchangeToken: String): Sce
 
     override val composition: Composition
         get() = when (launchTask.status) {
-            AsyncTask.TaskStatus.FAILED -> failComposition
-            AsyncTask.TaskStatus.SUCCESS -> successComposition
+            Task.TaskStatus.FAILED -> failComposition
+            Task.TaskStatus.SUCCESS -> successComposition
             else -> loadingComposition
         }
 
     override fun update() {
-        if (launchTask.status == AsyncTask.TaskStatus.WAITING) launchTask.launchTask()
-        if (launchTask.status == AsyncTask.TaskStatus.SUCCESS && config.closeAfterLaunch) isRunning = false
+        if (launchTask.status == Task.TaskStatus.WAITING) launchTask.launchTaskAsync()
+        if (launchTask.status == Task.TaskStatus.SUCCESS && config.closeAfterLaunch) isRunning = false
     }
 }

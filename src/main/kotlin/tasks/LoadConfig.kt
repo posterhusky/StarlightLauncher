@@ -2,11 +2,11 @@ package net.vanolex.tasks
 
 import net.vanolex.config
 import net.vanolex.Config
-import net.vanolex.epicapi.AsyncTask
+import net.vanolex.epicapi.Task
 import net.vanolex.gson
 import java.io.File
 
-class LoadConfig : AsyncTask() {
+class LoadConfig : Task() {
     override suspend fun task() {
         config = try {
             gson.fromJson(File("./config.json").readText(), Config::class.java)

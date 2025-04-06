@@ -16,8 +16,9 @@ import java.awt.Graphics2D
 import java.awt.RenderingHints
 import java.awt.geom.Rectangle2D
 
-abstract class Scene(var isEmbedded: Boolean = false) {
+abstract class Scene {
 
+    open val isImportant = false
     var sceneFrames = 0
 
     fun tick() {

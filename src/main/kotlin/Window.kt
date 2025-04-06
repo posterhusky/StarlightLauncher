@@ -1,8 +1,8 @@
 package net.vanolex
 
-import io.ktor.websocket.*
 import net.vanolex.listeners.CloseListener
 import net.vanolex.listeners.MouseListener
+import net.vanolex.listeners.MouseWheelListener
 import java.awt.Color
 import java.awt.Dimension
 import javax.imageio.ImageIO
@@ -32,5 +32,6 @@ object Window: JFrame("Fortnite Launcher") {
         isVisible = true
         addMouseListener(MouseListener)
         addWindowListener(CloseListener)
+        addMouseWheelListener(MouseWheelListener)
     }
 }

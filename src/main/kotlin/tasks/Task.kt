@@ -3,7 +3,7 @@ package net.vanolex.epicapi
 import kotlinx.coroutines.*
 import net.vanolex.jobList
 
-abstract class AsyncTask {
+abstract class Task {
 
     private lateinit var job: Job
 
@@ -11,19 +11,22 @@ abstract class AsyncTask {
 
     var status: TaskStatus = TaskStatus.WAITING
 
-    fun launchTask() {
+    fun launchTaskAsync() {
         if (status == TaskStatus.IN_PROGRESS) return
         job = scope.launch {
-            status = TaskStatus.IN_PROGRESS
-            try {
-                task()
-            } catch (e: Exception) {
-                status = TaskStatus.FAILED
-            }
+            launchTaskSync()
         }
-
         jobList.add(job)
+    }
 
+    suspend fun launchTaskSync() {
+        status = TaskStatus.IN_PROGRESS
+        try {
+            task()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            status = TaskStatus.FAILED
+        }
     }
 
     abstract suspend fun task()

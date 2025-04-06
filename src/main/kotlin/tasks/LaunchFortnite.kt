@@ -1,16 +1,15 @@
 package net.vanolex.epicapi
 
-import com.sun.tools.javac.tree.TreeInfo.args
 import kotlinx.coroutines.delay
 import net.vanolex.config
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.util.*
+import net.vanolex.tasks.BasicTask
 
 
-class LaunchFortnite(val accountId: String, val exchangeToken: String): AsyncTask() {
+class LaunchFortnite(val accountId: String, val exchangeTokenTask: BasicTask<String>): Task() {
     override suspend fun task() {
+        exchangeTokenTask.launchTaskSync()
+        val exchangeToken = exchangeTokenTask.result
+
         ProcessBuilder(
             "cmd.exe",
             "/C",
