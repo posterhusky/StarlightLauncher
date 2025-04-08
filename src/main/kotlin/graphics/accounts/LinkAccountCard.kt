@@ -56,10 +56,10 @@ class LinkAccountCard(
         ))
 
         val plusCircle = Area( Ellipse2D.Double(
-            x + 108 + widthOffset*0.1,
-            y + 43 + heightOffset * 0.2,
-            54 - widthOffset*0.2,
-            54 - widthOffset*0.2,
+            x + 108 + widthOffset*0.2,
+            y + 43 + heightOffset * 0.3,
+            54 - widthOffset*0.4,
+            54 - widthOffset*0.4,
         ))
         val plus = Area( RoundRectangle2D.Double(
             x + 123.0,

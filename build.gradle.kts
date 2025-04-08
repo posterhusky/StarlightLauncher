@@ -1,11 +1,10 @@
 plugins {
     kotlin("jvm") version "2.0.0"
-    application
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 group = "net.vanolex"
-version = "1.0-SNAPSHOT"
+version = "1.0-rc1"
 
 var ktor_version = "3.1.0"
 var coroutines_version = "1.9.0-RC.2"
@@ -25,8 +24,6 @@ dependencies {
     implementation("com.google.code.gson:gson:2.12.1")
     implementation("ch.qos.logback:logback-classic:1.5.17")
     implementation("com.github.steos:jnafilechooser:1.1.2")
-    implementation("net.java.dev.jna:jna:5.13.0")
-    implementation("net.java.dev.jna:jna-platform:5.13.0")
 }
 
 tasks.test {
@@ -36,6 +33,18 @@ kotlin {
     jvmToolchain(21)
 }
 
-application {
-    mainClass.set("net.vanolex.MainKt")
+tasks {
+    jar {
+        manifest {
+            attributes["Main-Class"] = "net.vanolex.MainKt"
+        }
+    }
+
+    build {
+        dependsOn(shadowJar)
+    }
+    shadowJar {
+        mergeServiceFiles()
+        archiveClassifier = ""
+    }
 }

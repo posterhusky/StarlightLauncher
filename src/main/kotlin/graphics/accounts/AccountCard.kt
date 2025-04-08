@@ -31,7 +31,7 @@ class AccountCard(
     val profilePicture = ProfilePicture(x + 55, y + 65, account.profilePicture, 70, false)
     val bgCol = getAverageColor(account.profilePicture)
 
-    val isHovered get() = localMousePosition.x in max(65, x)..<min(935, x+w) && localMousePosition.y + offset() in max(105, y)..<min(435, y+h)
+    val isHovered get() = localMousePosition.x in max(65, x)..<min(935, x+w) && localMousePosition.y + offset() in max(105 + offset(), y)..<min(435 + offset(), y+h)
     var hoverProgress = 0.0
 
     override val isSelected: Boolean

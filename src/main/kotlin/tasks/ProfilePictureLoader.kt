@@ -72,7 +72,6 @@ object ProfilePictureLoader {
 
         for (it in loadoutSlots) {
             val i = it as? JsonObject ?: continue
-            if (i == null) continue
             if (i["slotTemplate"].asString != "CosmeticLoadoutSlotTemplate:LoadoutSlot_Character") continue
             return i["equippedItemId"].asString.removePrefix("AthenaCharacter:")
         }
