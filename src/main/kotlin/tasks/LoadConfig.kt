@@ -1,15 +1,13 @@
 package net.vanolex.tasks
 
-import net.vanolex.config
-import net.vanolex.Config
+import net.vanolex.*
 import net.vanolex.epicapi.Task
-import net.vanolex.gson
-import java.io.File
 
 class LoadConfig : Task() {
     override suspend fun task() {
         config = try {
-            gson.fromJson(File("./config.json").readText(), Config::class.java)
+            val file = loadFile("config.json")
+            gson.fromJson(file.readText(), Config::class.java)
         } catch (e: Exception) {
             Config(
                 "C:/Program Files/Epic Games/Fortnite/FortniteGame/Binaries/Win64/FortniteLauncher.exe",

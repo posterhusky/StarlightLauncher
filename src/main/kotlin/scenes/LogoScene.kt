@@ -23,8 +23,6 @@ class LogoScene: Scene() {
     val findFortniteTask = FindFortnite()
 
     override fun update() {
-        if (loadAccountsTask.status == Task.TaskStatus.WAITING) loadAccountsTask.launchTaskAsync()
-
         if (loadConfigTask.status == Task.TaskStatus.WAITING) {
             loadConfigTask.launchTaskAsync()
             return
@@ -32,6 +30,7 @@ class LogoScene: Scene() {
 
         if (loadConfigTask.status != Task.TaskStatus.SUCCESS) return
 
+        if (loadAccountsTask.status == Task.TaskStatus.WAITING) loadAccountsTask.launchTaskAsync()
         if (findFortniteTask.status == Task.TaskStatus.WAITING) findFortniteTask.launchTaskAsync()
     }
 

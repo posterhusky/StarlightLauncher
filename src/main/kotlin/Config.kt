@@ -1,7 +1,5 @@
 package net.vanolex
 
-import java.io.File
-
 data class Config(
     var fortnitePath: String,
     var closeAfterLaunch: Boolean,
@@ -9,7 +7,7 @@ data class Config(
 ) {
     fun save() {
         val jsonString = gson.toJson(this)
-        val file = File("./config.json")
+        val file = loadFile("config.json")
         file.writeText(jsonString)
     }
 }

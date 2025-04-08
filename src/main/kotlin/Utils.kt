@@ -4,8 +4,8 @@ import com.google.gson.Gson
 import io.ktor.client.*
 import kotlinx.coroutines.Job
 import net.vanolex.tasks.LoadAccounts
-import java.awt.MouseInfo
 import java.awt.Point
+import java.io.File
 
 val switchAuth = "OThmN2U0MmMyZTNhNGY4NmE3NGViNDNmYmI0MWVkMzk6MGEyNDQ5YTItMDAxYS00NTFlLWFmZWMtM2U4MTI5MDFjNGQ3"
 val pcAuth = "ZWM2ODRiOGM2ODdmNDc5ZmFkZWEzY2IyYWQ4M2Y1YzY6ZTFmMzFjMjExZjI4NDEzMTg2MjYyZDM3YTEzZmM4NGQ="
@@ -19,11 +19,21 @@ val isAccountsInitialized get() = ::accounts.isInitialized
 val loadAccountsTask = LoadAccounts()
 
 val localMousePosition get() = Window.mousePosition ?: Point(-1, -1)
-val globalMousePosition get() = MouseInfo.getPointerInfo().location
 
 lateinit var config: Config
 
+val appDataRoamingPath: String = System.getenv("APPDATA") ?: "${System.getProperty("user.home")}\\AppData\\Roaming"
+val starlightLauncherFolder = File(appDataRoamingPath, "StarlightLauncher")
+
 val jobList = mutableListOf<Job>()
+
+fun loadFile(name: String): File {
+    if (!starlightLauncherFolder.isDirectory) starlightLauncherFolder.delete()
+    if (starlightLauncherFolder.exists()) starlightLauncherFolder.mkdirs()
+    return File(starlightLauncherFolder, name)
+}
+
+
 
 var frames: ULong = 0UL
 var isRunning = true

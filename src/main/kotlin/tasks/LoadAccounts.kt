@@ -2,17 +2,15 @@ package net.vanolex.tasks
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import net.vanolex.Account
-import net.vanolex.accounts
+import net.vanolex.*
 import net.vanolex.epicapi.Task
-import net.vanolex.gson
-import java.io.File
 
 class LoadAccounts: Task() {
 
     override suspend fun task() {
         val accs = try {
-            gson.fromJson(File("./accounts.json").readText(), JsonArray::class.java)
+            val file = loadFile("accounts.json")
+            gson.fromJson(file.readText(), JsonArray::class.java)
         } catch (e: Exception) {
             mutableListOf()
         }

@@ -7,7 +7,6 @@ import io.ktor.http.*
 import net.vanolex.epicapi.EpicAPIException
 import net.vanolex.epicapi.ProfilePictureLoader
 import java.awt.image.BufferedImage
-import java.io.File
 
 class Account(
     val deviceId: String,
@@ -61,7 +60,7 @@ class Account(
                     Pair("secret", it.secret)
                 )
             })
-            val file = File("./accounts.json")
+            val file = loadFile("accounts.json")
             file.writeText(jsonString)
         }
     }
