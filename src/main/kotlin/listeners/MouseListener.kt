@@ -17,10 +17,10 @@ object MouseListener: MouseListener {
         if (e.button != 1) return
 
         action = when (true) {
-            inCloseArea -> WindowCloseAction(localMousePosition)
-            inMinimizeArea -> WindowMinimizeAction(localMousePosition)
-            (e.point.y <= 22) -> WindowMoveAction(localMousePosition)
-            else -> NormalMouseAction(localMousePosition)
+            inCloseArea -> WindowCloseAction()
+            inMinimizeArea -> WindowMinimizeAction()
+            (e.point.y <= 22) -> WindowMoveAction()
+            else -> NormalMouseAction()
         }
     }
 

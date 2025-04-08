@@ -5,8 +5,6 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import net.vanolex.*
-import net.vanolex.epicapi.EpicAPIException
-import net.vanolex.epicapi.Task
 import java.awt.image.BufferedImage
 
 class SaveAccount(val accountId: String, val exchangeToken: String, val profilePicture: BufferedImage, val displayName: String): Task() {

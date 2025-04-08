@@ -1,7 +1,6 @@
 package net.vanolex.tasks
 
 import net.vanolex.*
-import net.vanolex.epicapi.Task
 
 class LoadConfig : Task() {
     override suspend fun task() {

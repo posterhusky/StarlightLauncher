@@ -1,7 +1,6 @@
 package net.vanolex.tasks
 
 import net.vanolex.config
-import net.vanolex.epicapi.Task
 import java.io.File
 
 class FindFortnite: Task() {
@@ -19,13 +18,13 @@ class FindFortnite: Task() {
         }
     }
 
-    fun definePath(path: String) {
+    private fun definePath(path: String) {
         config.fortnitePath = path
         config.save()
         status = TaskStatus.SUCCESS
     }
 
-    fun extractPathFromEASLogs(): String {
+    private fun extractPathFromEASLogs(): String {
         val userHome = System.getProperty("user.home")
         val easLogDir = File(userHome, "AppData\\Roaming\\EasyAntiCheat\\prod-fn\\62a9473a2dca46b29ccf17577fcf42d7")
 
@@ -49,7 +48,7 @@ class FindFortnite: Task() {
         throw IllegalStateException("None of the files had the correct path.")
     }
 
-    fun testPath(path: String): Boolean {
+    private fun testPath(path: String): Boolean {
         val file = File(path)
         if (!file.exists()) return false
         if (!path.replace("\\", "/").endsWith("FortniteGame/Binaries/Win64/FortniteLauncher.exe")) return false

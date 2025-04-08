@@ -1,4 +1,4 @@
-package net.vanolex.epicapi
+package net.vanolex.tasks
 
 import kotlinx.coroutines.*
 import net.vanolex.jobList
@@ -31,10 +31,10 @@ abstract class Task {
 
     abstract suspend fun task()
 
-    fun cancelTask() {
-        job.cancel()
-        status = TaskStatus.CANCELLED
-    }
+//    fun cancelTask() {
+//        job.cancel()
+//        status = TaskStatus.CANCELLED
+//    }
 
     enum class TaskStatus {
         WAITING, IN_PROGRESS, SUCCESS, FAILED, CANCELLED

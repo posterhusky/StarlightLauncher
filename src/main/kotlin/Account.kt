@@ -4,8 +4,8 @@ import com.google.gson.JsonObject
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import net.vanolex.epicapi.EpicAPIException
-import net.vanolex.epicapi.ProfilePictureLoader
+import net.vanolex.tasks.EpicAPIException
+import net.vanolex.tasks.ProfilePictureLoader
 import java.awt.image.BufferedImage
 
 class Account(
@@ -38,7 +38,7 @@ class Account(
         return jsonResponse["code"].asString
     }
 
-    suspend fun getAccessToken(): JsonObject {
+    private suspend fun getAccessToken(): JsonObject {
         val response = client.post("https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/token") {
             headers {
                 append("Content-Type", "application/x-www-form-urlencoded")

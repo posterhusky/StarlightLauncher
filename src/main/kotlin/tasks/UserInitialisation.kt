@@ -1,4 +1,4 @@
-package net.vanolex.epicapi
+package net.vanolex.tasks
 
 import com.google.gson.JsonObject
 import io.ktor.client.request.*
@@ -39,7 +39,7 @@ class UserInitialisation: Task() {
         response = client.post("https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/deviceAuthorization") {
             headers {
                 append("Content-Type", "application/x-www-form-urlencoded")
-                append("Authorization", "bearer ${switchToken}")
+                append("Authorization", "bearer $switchToken")
             }
         }
         if (response.status != HttpStatusCode.OK) throw EpicAPIException(response.bodyAsText())

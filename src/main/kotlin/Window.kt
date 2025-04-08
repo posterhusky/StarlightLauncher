@@ -5,10 +5,8 @@ import net.vanolex.listeners.MouseListener
 import net.vanolex.listeners.MouseWheelListener
 import java.awt.Color
 import java.awt.Dimension
-import java.awt.Frame
 import javax.imageio.ImageIO
 import javax.swing.JFrame
-import javax.swing.WindowConstants
 
 object Window: JFrame("Starlight Launcher") {
     private fun readResolve(): Any = this

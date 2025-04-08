@@ -1,4 +1,4 @@
-package net.vanolex.epicapi
+package net.vanolex.tasks
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -6,6 +6,8 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.vanolex.client
 import net.vanolex.gson
 import net.vanolex.pcAuth
@@ -55,7 +57,9 @@ object ProfilePictureLoader {
                 }
             }
 
-        val img = ImageIO.read(ByteArrayInputStream(response.bodyAsBytes()))
+        val img = withContext(Dispatchers.IO) {
+            ImageIO.read(ByteArrayInputStream(response.bodyAsBytes()))
+        }
 
         return img
 

@@ -2,8 +2,8 @@ package net.vanolex.scenes
 
 import net.vanolex.Panel
 import net.vanolex.config
-import net.vanolex.epicapi.Task
-import net.vanolex.epicapi.LaunchFortnite
+import net.vanolex.tasks.Task
+import net.vanolex.tasks.LaunchFortnite
 import net.vanolex.graphics.Composition
 import net.vanolex.isRunning
 import net.vanolex.tasks.BasicTask
@@ -13,16 +13,16 @@ class LaunchFortniteScene(accountId: String, exchangeTokenTask: BasicTask<String
 
     override val isImportant = true
 
-    val launchTask = LaunchFortnite(accountId, exchangeTokenTask)
+    private val launchTask = LaunchFortnite(accountId, exchangeTokenTask)
 
-    val loadingComposition = CompositionBuilder.buildDialogue("LAUNCHING...", "", true)
-    val failComposition = CompositionBuilder.buildDialogue("UNEXPECTED ERROR",
+    private val loadingComposition = CompositionBuilder.buildDialogue("LAUNCHING...", "", true)
+    private val failComposition = CompositionBuilder.buildDialogue("UNEXPECTED ERROR",
         "An unexpected error occurred during the login process. Please try again.",
         secondaryButtonText = "CANCEL",
         secondaryButtonAction = { Panel.scene = MainMenuScene() }
     )
 
-    val successComposition = CompositionBuilder.buildDialogue("SUCCESS!",
+    private val successComposition = CompositionBuilder.buildDialogue("SUCCESS!",
         "Fortnite was launched! The window should appear in a few seconds.",
         primaryButtonText = "MAIN MENU",
         primaryButtonAction = { Panel.scene = MainMenuScene() },

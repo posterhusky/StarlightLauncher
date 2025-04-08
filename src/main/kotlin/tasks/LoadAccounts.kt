@@ -3,7 +3,6 @@ package net.vanolex.tasks
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import net.vanolex.*
-import net.vanolex.epicapi.Task
 
 class LoadAccounts: Task() {
 

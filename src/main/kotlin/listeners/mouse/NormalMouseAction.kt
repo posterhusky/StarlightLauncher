@@ -2,9 +2,8 @@ package net.vanolex.listeners.mouse
 
 import net.vanolex.Panel
 import java.awt.MouseInfo
-import java.awt.Point
 
-class NormalMouseAction(relativeClickStart: Point): MouseAction(relativeClickStart) {
+class NormalMouseAction : MouseAction() {
     var clickEligible = true
 
     override fun tick() {

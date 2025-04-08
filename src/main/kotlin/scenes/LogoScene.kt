@@ -1,7 +1,7 @@
 package net.vanolex.scenes
 
 import net.vanolex.Panel
-import net.vanolex.epicapi.Task
+import net.vanolex.tasks.Task
 import net.vanolex.fonts.introFont
 import net.vanolex.fonts.nougatFont
 import net.vanolex.frames
@@ -17,10 +17,10 @@ import kotlin.math.abs
 class LogoScene: Scene() {
     override val isImportant = true
 
-    val presentsGlyph = introFont.getGlyph(50f, "PRESENTS")
+    private val presentsGlyph = introFont.getGlyph(50f, "PRESENTS")
 
-    val loadConfigTask = LoadConfig()
-    val findFortniteTask = FindFortnite()
+    private val loadConfigTask = LoadConfig()
+    private val findFortniteTask = FindFortnite()
 
     override fun update() {
         if (loadConfigTask.status == Task.TaskStatus.WAITING) {

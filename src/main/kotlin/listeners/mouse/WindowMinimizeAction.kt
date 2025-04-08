@@ -1,12 +1,10 @@
 package net.vanolex.listeners.mouse
 
 import net.vanolex.Window
-import net.vanolex.isRunning
 import net.vanolex.listeners.MouseListener
 import java.awt.Frame
-import java.awt.Point
 
-class WindowMinimizeAction(relativeClickStart: Point): MouseAction(relativeClickStart) {
+class WindowMinimizeAction : MouseAction() {
     override fun tick() {}
 
     override fun onRelease() {

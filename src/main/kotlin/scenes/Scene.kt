@@ -1,15 +1,11 @@
 package net.vanolex.scenes
 
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import net.vanolex.Panel
 import net.vanolex.Window
-import net.vanolex.fonts.archivoMediumItalic
 import net.vanolex.graphics.Background
 import net.vanolex.graphics.Composition
 import net.vanolex.graphics.CustomDraw
 import net.vanolex.graphics.Shade
-import net.vanolex.graphics.elements.Text
 import net.vanolex.listeners.MouseListener
 import java.awt.Color
 import java.awt.Graphics2D
@@ -19,7 +15,7 @@ import java.awt.geom.Rectangle2D
 abstract class Scene {
 
     open val isImportant = false
-    var sceneFrames = 0
+    private var sceneFrames = 0
 
     fun tick() {
         sceneFrames += 1

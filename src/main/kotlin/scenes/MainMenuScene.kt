@@ -1,6 +1,6 @@
 package net.vanolex.scenes
 
-import net.vanolex.epicapi.Task
+import net.vanolex.tasks.Task
 import net.vanolex.fonts.archivoBlack
 import net.vanolex.fonts.archivoBlackItalic
 import net.vanolex.graphics.*
@@ -10,13 +10,12 @@ import net.vanolex.loadAccountsTask
 import java.awt.Color
 
 class MainMenuScene: Scene() {
-    val actionButton = SolidButton(650, 490, 285, 70, {cardScroller?.buttonText ?: "LAUNCH"}, true, {cardScroller?.selectedCard == null}, {cardScroller?.selectedCard?.execAction()})
-    var cardScroller: CardScroller? = null
-    var selText = ""
+    private val actionButton = SolidButton(650, 490, 285, 70, {cardScroller?.buttonText ?: "LAUNCH"}, true, {cardScroller?.selectedCard == null}, {cardScroller?.selectedCard?.execAction()})
+    private var cardScroller: CardScroller? = null
 
-    val loadingGlyph = archivoBlackItalic.getGlyph(40, "LOADING ACCOUNTS...")
-    val selectAccountGlyph = archivoBlack.getGlyph(30, "SELECT ACCOUNT:")
-    val loadingComp = Composition(
+    private val loadingGlyph = archivoBlackItalic.getGlyph(40, "LOADING ACCOUNTS...")
+    private val selectAccountGlyph = archivoBlack.getGlyph(30, "SELECT ACCOUNT:")
+    private val loadingComp = Composition(
         Shade(50, 40, 900, 410, 40),
         Shade(50, 475, 900, 100, 40),
         actionButton,
@@ -24,7 +23,7 @@ class MainMenuScene: Scene() {
         Text(loadingGlyph, (1000 - loadingGlyph.width) / 2, 300, Color.WHITE)
     )
 
-    val mainComp: Composition?
+    private val mainComp: Composition?
         get() {
             return Composition(
                 Shade(50, 40, 900, 410, 40),
