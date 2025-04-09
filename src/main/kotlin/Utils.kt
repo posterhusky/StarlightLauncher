@@ -29,7 +29,7 @@ val jobList = mutableListOf<Job>()
 
 fun loadFile(name: String): File {
     if (!starlightLauncherFolder.isDirectory) starlightLauncherFolder.delete()
-    if (starlightLauncherFolder.exists()) starlightLauncherFolder.mkdirs()
+    starlightLauncherFolder.mkdirs()
     return File(starlightLauncherFolder, name)
 }
 
