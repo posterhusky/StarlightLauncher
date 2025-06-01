@@ -3,10 +3,11 @@ package net.vanolex.scenes
 import net.vanolex.Panel
 import net.vanolex.tasks.Task
 import net.vanolex.tasks.UserInitialisation
-import net.vanolex.fonts.archivoBlack
-import net.vanolex.fonts.archivoMedium
+import net.vanolex.fonts.titleFont
+import net.vanolex.fonts.paragraphFont
 import net.vanolex.graphics.*
 import net.vanolex.graphics.elements.Text
+import net.vanolex.lang
 import net.vanolex.tasks.SaveAccount
 import java.awt.Color
 
@@ -26,51 +27,50 @@ class LinkAccount: Scene() {
             if (status == Task.TaskStatus.IN_PROGRESS) return
             if (status == Task.TaskStatus.FAILED) state = State.FAIL
             if (status == Task.TaskStatus.SUCCESS) {
-                val titleGlyph = archivoBlack.getGlyph(45, "HI, ${userInitialisationTask.displayName.uppercase()}!")
+                val titleGlyph = titleFont.getGlyph(45, lang.linked.replace("%s", userInitialisationTask.displayName.uppercase()))
                 saveAccountTask = SaveAccount(userInitialisationTask.accountId, userInitialisationTask.exchangeToken, userInitialisationTask.profilePicture, userInitialisationTask.displayName)
                 successComposition = Composition(
                     Shade(200, 40, 600, 530, 40),
                     Text(titleGlyph, (1000-titleGlyph.width)/2, 265, Color.WHITE),
-                    MultilineText("Login successful! Your account is now linked. You can save it to skip authentication next time or launch Fortnite without saving.", archivoMedium, 540, 18, 230, 340),
+                    MultilineText(lang.linkedLore, paragraphFont, 540, 18, 230, 340),
                     ProfilePicture(500, 155, userInitialisationTask.profilePicture),
-                    SolidButton(220, 415, 560, 70, "SAVE", true) {saveAccountTask?.launchTaskAsync()},
-                    SolidButton(220, 500, 560, 50, "LAUNCH", isPrimary = false) { Panel.scene = LaunchFortniteScene(userInitialisationTask.accountId, userInitialisationTask.exchangeToken) },
+                    SolidButton(220, 415, 560, 70, lang.save, true) {saveAccountTask?.launchTaskAsync()},
+                    SolidButton(220, 500, 560, 50, lang.launch, isPrimary = false) { Panel.scene = LaunchFortniteScene(userInitialisationTask.accountId, userInitialisationTask.exchangeToken) },
                 )
                 state = State.SUCCESS
             }
         }
     }
 
-    private val infoComposition = CompositionBuilder.buildDialogue("LINK YOUR ACCOUNT",
-        "To sign into Fortnite, you'll need to link your Epic account. Continuing will open a browser window " +
-            "directing you to the official Epic Games website where you can complete the sign-in process.",
-        primaryButtonText = "CONTINUE",
+    private val infoComposition = CompositionBuilder.buildDialogue(lang.linkAccount,
+        lang.linkAccountLore,
+        primaryButtonText = lang.next,
         primaryButtonAction = {state = State.FETCHING},
-        secondaryButtonText = "CANCEL",
+        secondaryButtonText = lang.cancel,
         secondaryButtonAction = { Panel.scene = MainMenuScene() }
     )
 
-    private val fetchingComposition = CompositionBuilder.buildDialogue("WAITING FOR LOGIN...",
-        "The Epic Games login page was opened in your browser. Once you've signed in, this window will refresh automatically.",
+    private val fetchingComposition = CompositionBuilder.buildDialogue(lang.waitingLogin,
+        lang.waitingLoginLore,
         hasSpinner = true,
-        secondaryButtonText = "CANCEL",
+        secondaryButtonText = lang.cancel,
         secondaryButtonAction = { Panel.scene = MainMenuScene() }
     )
 
-    private val savingComposition = CompositionBuilder.buildDialogue("SAVING ACCOUNT...",
-        "Your account is being saved, please wait a few seconds...",
+    private val savingComposition = CompositionBuilder.buildDialogue(lang.saving,
+        lang.savingLore,
         hasSpinner = true
     )
 
-    private val savedComposition = CompositionBuilder.buildDialogue("ACCOUNT SAVED",
-        "Your account has been saved successfully! You can now go to the main menu and launch the game from there.",
-        primaryButtonText = "CONTINUE",
+    private val savedComposition = CompositionBuilder.buildDialogue(lang.saved,
+        lang.savedLore,
+        primaryButtonText = lang.next,
         primaryButtonAction = {Panel.scene = MainMenuScene()}
     )
 
-    private val failComposition = CompositionBuilder.buildDialogue("UNEXPECTED ERROR",
-        "An unexpected error occurred during the process. Please try again.",
-        secondaryButtonText = "CANCEL",
+    private val failComposition = CompositionBuilder.buildDialogue(lang.unexpectedError,
+        lang.unexpectedErrorLore,
+        secondaryButtonText = lang.cancel,
         secondaryButtonAction = { Panel.scene = MainMenuScene() }
     )
 

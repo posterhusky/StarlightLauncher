@@ -1,14 +1,13 @@
 package net.vanolex.scenes
 
-import net.vanolex.Panel
+import net.vanolex.*
 import net.vanolex.tasks.Task
 import net.vanolex.fonts.introFont
 import net.vanolex.fonts.nougatFont
-import net.vanolex.frames
+import net.vanolex.fonts.paragraphFont
 import net.vanolex.graphics.Composition
 import net.vanolex.graphics.elements.ScreenFill
 import net.vanolex.graphics.elements.Text
-import net.vanolex.loadAccountsTask
 import net.vanolex.tasks.FindFortnite
 import net.vanolex.tasks.LoadConfig
 import java.awt.Color
@@ -39,8 +38,8 @@ class LogoScene: Scene() {
             // Ctrl+C Ctrl+V from Minecraft Dungeons: Battle
             val sceneFrames120 = frames.toInt()*2
             val composition = Composition(
-                ScreenFill(Color(25, 26, 48))
-
+                ScreenFill(Color(25, 26, 48)),
+                Text(paragraphFont.getGlyph(12, "v${Version.CURRENT}"), 5, 585, Color.WHITE),
             )
 
             if (sceneFrames120 > 560) {

@@ -4,8 +4,8 @@ import jnafilechooser.api.JnaFileChooser
 import net.vanolex.Panel
 import net.vanolex.Window
 import net.vanolex.config
-import net.vanolex.fonts.archivoBlack
-import net.vanolex.fonts.archivoMedium
+import net.vanolex.fonts.titleFont
+import net.vanolex.fonts.paragraphFont
 import net.vanolex.graphics.*
 import net.vanolex.graphics.elements.Text
 import java.awt.Color
@@ -33,8 +33,8 @@ class SelectFortniteDialogue: Scene() {
 
     private val errComp = Composition(
         Shade(200, 40, 600, 530, 40),
-        Text(archivoBlack.getGlyph(45, "ERROR"), (1000-archivoBlack.getGlyph(45, "ERROR").width)/2, 90, Color.WHITE),
-        DynamicMultilineText({error}, archivoMedium, 540, 18, 230, 180),
+        Text(titleFont.getGlyph(45, "ERROR"), (1000-titleFont.getGlyph(45, "ERROR").width)/2, 90, Color.WHITE),
+        DynamicMultilineText({error}, paragraphFont, 540, 18, 230, 180),
         SolidButton(220, 480, 560, 70, "CONTINUE", isPrimary = false) { error = "" },
     )
 

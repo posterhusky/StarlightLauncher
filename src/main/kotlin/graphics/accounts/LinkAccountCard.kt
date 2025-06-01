@@ -1,22 +1,18 @@
 package net.vanolex.graphics.accounts
 
 import net.vanolex.Panel
-import net.vanolex.fonts.archivoBlack
+import net.vanolex.fonts.titleFont
 import net.vanolex.graphics.Element
-import net.vanolex.graphics.ProfilePicture
+import net.vanolex.lang
 import net.vanolex.listeners.MouseListener
 import net.vanolex.listeners.mouse.NormalMouseAction
 import net.vanolex.localMousePosition
-import net.vanolex.scenes.LaunchFortniteScene
 import net.vanolex.scenes.LinkAccount
-import net.vanolex.tasks.BasicTask
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.geom.Area
 import java.awt.geom.Ellipse2D
-import java.awt.geom.Rectangle2D
 import java.awt.geom.RoundRectangle2D
-import java.awt.image.BufferedImage
 import kotlin.math.max
 import kotlin.math.min
 
@@ -26,11 +22,11 @@ class LinkAccountCard(
     val w = 270
     val h = 170
 
-    override val selText = "LINK ACCOUNT"
-    override val buttonText = "LINK"
+    override val selText = lang.linkAccountShort
+    override val buttonText = lang.linkAccountAction
 
 
-    val isHovered get() = localMousePosition.x in max(65, x)..<min(935, x+w) && localMousePosition.y + offset() in max(105, y)..<min(435, y+h)
+    val isHovered get() = localMousePosition.x in max(65, x)..<min(935, x+w) && localMousePosition.y + offset() in max(105 + offset(), y)..<min(435 + offset(), y+h)
     var hoverProgress = 0.0
 
     override val isSelected: Boolean
@@ -101,7 +97,7 @@ class LinkAccountCard(
         }
 
         g.color = Color.WHITE
-        val glyph = archivoBlack.getGlyph(25-widthOffset*0.4, "LINK ACCOUNT")
+        val glyph = titleFont.getGlyph(25-widthOffset*0.4, lang.linkAccountShort, w - 2*widthOffset - 40)
         g.drawGlyphVector(glyph.coreGlyph, x + 135f - glyph.width.toFloat()/2f, y + 140f - heightOffset.toFloat()*0.87f)
 
         if (hoverProgress <= 0.0) return

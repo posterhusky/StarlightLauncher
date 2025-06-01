@@ -1,7 +1,7 @@
 package net.vanolex.graphics
 
-import net.vanolex.fonts.archivoBlack
-import net.vanolex.fonts.archivoBlackItalic
+import net.vanolex.fonts.titleFont
+import net.vanolex.fonts.titleFontItalic
 import net.vanolex.listeners.MouseListener
 import net.vanolex.listeners.mouse.NormalMouseAction
 import net.vanolex.localMousePosition
@@ -14,11 +14,19 @@ import kotlin.math.min
 
 class SolidButton(
     val x: Int, val y: Int, val w: Int, val h: Int,
-    val text: () -> String, val isPrimary: Boolean, var isDisabled: () -> Boolean = { false },
+    val text: () -> String, val style: Style, var isDisabled: () -> Boolean = { false },
     val clickAction: () -> Unit
 ): Element() {
+    constructor(x: Int, y: Int, w: Int, h: Int, text: String, style: Style, isDisabled: Boolean = false,
+                clickAction: () -> Unit): this(x,  y, w, h, {text}, style, { isDisabled }, clickAction)
+    constructor(x: Int, y: Int, w: Int, h: Int, text: () -> String, isPrimary: Boolean, isDisabled: () -> Boolean = { false },
+                clickAction: () -> Unit): this(x,  y, w, h, text, if (isPrimary) Style.PRIMARY else Style.SECONDARY, isDisabled, clickAction)
     constructor(x: Int, y: Int, w: Int, h: Int, text: String, isPrimary: Boolean, isDisabled: Boolean = false,
-                clickAction: () -> Unit): this(x,  y, w, h, {text}, isPrimary, { isDisabled }, clickAction)
+                clickAction: () -> Unit): this(x,  y, w, h, {text}, if (isPrimary) Style.PRIMARY else Style.SECONDARY, { isDisabled }, clickAction)
+
+    enum class Style {
+        PRIMARY, SECONDARY, OPAQUE,
+    }
 
     val isHovered get() = localMousePosition.x in x..x+w && localMousePosition.y in y..y+h
     var hoverProgress = 0.0
@@ -31,9 +39,12 @@ class SolidButton(
 
     override fun draw(g: Graphics2D) {
 
-        g.color = if (isDisabled()) Color(76, 85, 99)
-            else if (isPrimary) Color(246, 255, 19)
-            else Color(205, 231, 255)
+        g.color = if (isDisabled() && style != Style.OPAQUE) Color(76, 85, 99)
+            else when(style) {
+                Style.PRIMARY -> Color(246, 255, 19)
+                Style.SECONDARY -> Color(205, 231, 255)
+                Style.OPAQUE -> Color(0, 0, 0, 64)
+            }
         g.fill(RoundRectangle2D.Double(
             x.toDouble() + widthOffset,
             y.toDouble() + heightOffset,
@@ -43,14 +54,15 @@ class SolidButton(
             30.0
         ))
 
-        g.color = Color(15, 13, 28)
+        g.color = if (style == Style.OPAQUE) Color.WHITE
+            else Color(15, 13, 28)
         val glyph = (
-                if (isPrimary) archivoBlack
-                else archivoBlackItalic
+                if (style == Style.PRIMARY) titleFont
+                else titleFontItalic
             ).getGlyph((h.toDouble()/2)*(
                     if (isDisabled()) 1.0
                     else 1 - activeProgress*0.04
-                ), text().uppercase())
+                ), text().uppercase(), w.toDouble() - 40 - 2*widthOffset)
         g.drawGlyphVector(glyph.coreGlyph, x + (w-glyph.width).toFloat()/2, y + (h+glyph.height).toFloat()/2)
 
         if (hoverProgress <= 0.0 || isDisabled()) return

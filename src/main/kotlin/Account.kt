@@ -52,7 +52,7 @@ class Account(
 
     companion object {
         fun saveAccounts() {
-            if (!isAccountsInitialized) return
+            println("save")
             val jsonString = gson.toJson(accounts.map {
                 mapOf(
                     Pair("deviceId", it.deviceId),

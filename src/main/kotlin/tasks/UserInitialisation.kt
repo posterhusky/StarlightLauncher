@@ -5,6 +5,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.coroutines.*
+import net.vanolex.Window
 import net.vanolex.client
 import net.vanolex.gson
 import net.vanolex.switchAuth
@@ -54,7 +55,11 @@ class UserInitialisation: Task() {
 
         // Wait until response is 200 or an unexpected error happens
         while (true) {
-            delay(10000) // wait 10 sec
+            delay(7000) // wait 7 sec
+            while (!Window.isFocused) {
+                delay(500) // wait 0.5 sec
+            }
+            delay(3000) // wait 3 sec
             response = client.post("https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/token") {
                 headers {
                     append("Content-Type", "application/x-www-form-urlencoded")

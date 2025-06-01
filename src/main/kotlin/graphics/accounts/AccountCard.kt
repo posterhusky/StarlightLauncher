@@ -5,6 +5,7 @@ import net.vanolex.Panel
 import net.vanolex.fonts.archivoBlack
 import net.vanolex.graphics.Element
 import net.vanolex.graphics.ProfilePicture
+import net.vanolex.lang
 import net.vanolex.listeners.MouseListener
 import net.vanolex.listeners.mouse.NormalMouseAction
 import net.vanolex.localMousePosition
@@ -26,10 +27,11 @@ class AccountCard(
     val h = 170
 
     override val selText = account.displayName
-    override val buttonText = "LAUNCH"
+    override val buttonText = lang.launch
 
     val profilePicture = ProfilePicture(x + 55, y + 65, account.profilePicture, 70, false)
     val bgCol = getAverageColor(account.profilePicture)
+    val textSize = min(30.0, (230/ archivoBlack.getGlyph(30-widthOffset, account.displayName.uppercase()).width)*30)
 
     val isHovered get() = localMousePosition.x in max(65, x)..<min(935, x+w) && localMousePosition.y + offset() in max(105 + offset(), y)..<min(435 + offset(), y+h)
     var hoverProgress = 0.0
@@ -88,8 +90,8 @@ class AccountCard(
         }
 
         g.color = Color.WHITE
-        val glyph = archivoBlack.getGlyph(30-widthOffset*0.4, account.displayName.uppercase())
-        g.drawGlyphVector(glyph.coreGlyph, x + 20f + widthOffset.toFloat()*0.93f, y + 145f - heightOffset.toFloat()*0.87f)
+        val glyph = archivoBlack.getGlyph(textSize-widthOffset*0.4, account.displayName.uppercase())
+        g.drawGlyphVector(glyph.coreGlyph, x + 20f + widthOffset.toFloat()*0.93f, y + 135f + glyph.height/2 - heightOffset.toFloat()*0.87f)
 
         if (hoverProgress <= 0.0) return
 

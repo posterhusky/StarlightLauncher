@@ -13,15 +13,15 @@ class LoadAccounts: Task() {
         } catch (e: Exception) {
             mutableListOf()
         }
-        accounts = accs.map {
+        val accs2 = accs.map {
             try {
                 if (it !is JsonObject) return@map null
                 return@map Account(it["deviceId"].asString, it["accountId"].asString, it["secret"].asString).init()
             } catch (e: Exception) {
                 return@map null
             }
-        }.filterNotNull().toMutableList()
-        Account.saveAccounts()
+        }.filterNotNull()
+        accounts = accs2.toMutableList()
         status = TaskStatus.SUCCESS
     }
 }

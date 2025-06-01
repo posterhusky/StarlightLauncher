@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage
 
 class SaveAccount(val accountId: String, val exchangeToken: String, val profilePicture: BufferedImage, val displayName: String): Task() {
     override suspend fun task() {
-        if (!isAccountsInitialized) accounts = mutableListOf()
         for (i in accounts) {
             if (i.accountId != accountId) continue
             status = TaskStatus.SUCCESS

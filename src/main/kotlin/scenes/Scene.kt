@@ -1,11 +1,14 @@
 package net.vanolex.scenes
 
 import net.vanolex.Panel
+import net.vanolex.Version
 import net.vanolex.Window
+import net.vanolex.fonts.paragraphFont
 import net.vanolex.graphics.Background
 import net.vanolex.graphics.Composition
 import net.vanolex.graphics.CustomDraw
 import net.vanolex.graphics.Shade
+import net.vanolex.graphics.elements.Text
 import net.vanolex.listeners.MouseListener
 import java.awt.Color
 import java.awt.Graphics2D
@@ -40,6 +43,7 @@ abstract class Scene {
             Background(),
             Shade(0, 0, Window.width, 22, 0),
             composition,
+            Text(paragraphFont.getGlyph(12, Window.title), 5, 7, Color.WHITE),
             CustomDraw({MouseListener.inCloseArea}) {
                 if (MouseListener.inCloseArea) {
                     g.color = Color(242, 63, 67)

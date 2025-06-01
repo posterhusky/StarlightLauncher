@@ -4,6 +4,7 @@ import jdk.internal.org.jline.utils.Colors.h
 import net.vanolex.Account
 import net.vanolex.accounts
 import net.vanolex.graphics.Element
+import net.vanolex.lang
 import net.vanolex.localMousePosition
 import java.awt.Color
 import java.awt.Graphics2D
@@ -22,7 +23,7 @@ class CardScroller(): Element() {
     var scrollOffsetTarget: Int = 0
 
     val selText get() = (selectedCard?.selText ?: "").uppercase()
-    val buttonText get() = (selectedCard?.buttonText ?: "LAUNCH").uppercase()
+    val buttonText get() = (selectedCard?.buttonText ?: lang.launch).uppercase()
 
     val isHovered: Boolean
         get() = localMousePosition.x in 65..935 && localMousePosition.y in 105..435

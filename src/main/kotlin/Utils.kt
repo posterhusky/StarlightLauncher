@@ -3,18 +3,25 @@ package net.vanolex
 import com.google.gson.Gson
 import io.ktor.client.*
 import kotlinx.coroutines.Job
+import kotlinx.serialization.json.Json
 import net.vanolex.tasks.LoadAccounts
 import java.awt.Point
 import java.io.File
+import java.util.*
 
 const val switchAuth = "OThmN2U0MmMyZTNhNGY4NmE3NGViNDNmYmI0MWVkMzk6MGEyNDQ5YTItMDAxYS00NTFlLWFmZWMtM2U4MTI5MDFjNGQ3"
 const val pcAuth = "ZWM2ODRiOGM2ODdmNDc5ZmFkZWEzY2IyYWQ4M2Y1YzY6ZTFmMzFjMjExZjI4NDEzMTg2MjYyZDM3YTEzZmM4NGQ="
 const val androidAuth = "M2Y2OWU1NmM3NjQ5NDkyYzhjYzI5ZjFhZjA4YThhMTI6YjUxZWU5Y2IxMjIzNGY1MGE2OWVmYTY3ZWY1MzgxMmU="
+const val launcherAuth = "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y="
 val gson = Gson()
+val ktJson = Json {
+    ignoreUnknownKeys = true
+
+}
 
 lateinit var client: HttpClient
-lateinit var accounts: MutableList<Account>
-val isAccountsInitialized get() = ::accounts.isInitialized
+var accounts: MutableList<Account> = mutableListOf()
+lateinit var lang: Lang
 
 val loadAccountsTask = LoadAccounts()
 
@@ -33,7 +40,18 @@ fun loadFile(name: String): File {
     return File(starlightLauncherFolder, name)
 }
 
+fun determineLang(): String {
+    val langCode = Locale.getDefault().language
+    return if (Panel.javaClass.getResource("/lang/${langCode}.json") != null) langCode
+        else "en"
+}
 
+fun generateLang(): Lang {
+    val inputStream = Panel.javaClass.getResourceAsStream("/lang/${config.langCode}.json")
+        ?: Panel.javaClass.getResourceAsStream("/lang/en.json")
+
+    return ktJson.decodeFromString<Lang>(inputStream.readAllBytes().decodeToString())
+}
 
 var frames: ULong = 0UL
 var isRunning = true
