@@ -1,9 +1,10 @@
-package net.vanolex.graphics.accounts
+package net.vanolex.graphics
 
-import jdk.internal.org.jline.utils.Colors.h
 import net.vanolex.Account
 import net.vanolex.accounts
-import net.vanolex.graphics.Element
+import net.vanolex.graphics.buttons.cards.AccountCard
+import net.vanolex.graphics.buttons.cards.Card
+import net.vanolex.graphics.buttons.cards.LinkAccountCard
 import net.vanolex.lang
 import net.vanolex.localMousePosition
 import java.awt.Color
@@ -29,8 +30,8 @@ class CardScroller(): Element() {
         get() = localMousePosition.x in 65..935 && localMousePosition.y in 105..435
 
     val cardList = accounts.mapIndexed<Account, Card> { index, account ->
-        AccountCard(80 + (index%3)*285, 120 + (index/3)*185, account, this) { scrollOffset.roundToInt() }
-    }.toMutableList().also { it.add(LinkAccountCard(80 + (it.size%3)*285, 120 + (it.size/3)*185, this) { scrollOffset.roundToInt() }) }
+        AccountCard(80 + (index%3)*285, 120 + (index/3)*185, account, this)
+    }.toMutableList().also { it.add(LinkAccountCard(80 + (it.size%3)*285, 120 + (it.size/3)*185, this)) }
 
     val maxScroll = (-315 + ((cardList.size+2)/3)*185)
 

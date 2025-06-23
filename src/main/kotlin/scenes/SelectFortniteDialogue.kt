@@ -7,6 +7,7 @@ import net.vanolex.config
 import net.vanolex.fonts.titleFont
 import net.vanolex.fonts.paragraphFont
 import net.vanolex.graphics.*
+import net.vanolex.graphics.buttons.SolidButton
 import net.vanolex.graphics.elements.Text
 import java.awt.Color
 

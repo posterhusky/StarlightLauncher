@@ -6,6 +6,7 @@ import net.vanolex.tasks.UserInitialisation
 import net.vanolex.fonts.titleFont
 import net.vanolex.fonts.paragraphFont
 import net.vanolex.graphics.*
+import net.vanolex.graphics.buttons.SolidButton
 import net.vanolex.graphics.elements.Text
 import net.vanolex.lang
 import net.vanolex.tasks.SaveAccount

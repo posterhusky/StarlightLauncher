@@ -4,7 +4,8 @@ import net.vanolex.tasks.Task
 import net.vanolex.fonts.titleFont
 import net.vanolex.fonts.titleFontItalic
 import net.vanolex.graphics.*
-import net.vanolex.graphics.accounts.CardScroller
+import net.vanolex.graphics.CardScroller
+import net.vanolex.graphics.buttons.SolidButton
 import net.vanolex.graphics.elements.Text
 import net.vanolex.lang
 import net.vanolex.loadAccountsTask
