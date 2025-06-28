@@ -14,7 +14,7 @@ suspend fun main() = runBlocking {
 
     Window.createBufferStrategy(3)
     var lastFrame = 0L
-    val nanosPerFrame = 1_000_000_000/60.5
+    val nanosPerFrame = 1_000_000_000/60.1
     // game loop
     while (isRunning) {
         val now = System.nanoTime()

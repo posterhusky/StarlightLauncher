@@ -12,7 +12,7 @@
   "linked": "HI, %s!",
   "linkedLore": "Login successful! Your account is now linked. You can save it to skip authentication next time or launch Fortnite without saving.",
   "save": "SAVE",
-  "launch": "LAUNCH",
+  "launch": "SELECT",
   "linkAccountShort": "LINK ACCOUNT",
   "linkAccountAction": "LINK",
   "linkAccount": "LINK YOUR ACCOUNT",

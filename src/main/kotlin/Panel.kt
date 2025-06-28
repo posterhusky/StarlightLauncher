@@ -1,6 +1,7 @@
 package net.vanolex
 
 
+import net.vanolex.ImageManager.shadeBackground
 import net.vanolex.scenes.LogoScene
 import net.vanolex.scenes.Scene
 import java.awt.Graphics
@@ -11,10 +12,6 @@ import javax.swing.JPanel
 
 object Panel: JPanel() {
     private fun readResolve(): Any = this
-
-    val backgroundClear: BufferedImage by lazy { ImageIO.read(javaClass.getResourceAsStream("/img/background-clear.png")) }
-    val backgroundBlur: BufferedImage by lazy { ImageIO.read(javaClass.getResourceAsStream("/img/background-darken.png")) }
-    val loadingSpinner: BufferedImage by lazy { ImageIO.read(javaClass.getResourceAsStream("/img/loading-spinner.png")) }
 
     var scene: Scene = LogoScene()
 

@@ -1,5 +1,6 @@
 package net.vanolex.graphics
 
+import net.vanolex.ImageManager
 import net.vanolex.Panel
 import java.awt.Color
 import java.awt.Graphics2D
@@ -25,7 +26,7 @@ class LoadingSpinner(val centerX: Int, val centerY: Int): Element() {
 
         val oldTransform = g.transform
         g.rotate(Math.toRadians(angleDegrees.toDouble()), centerX.toDouble(), centerY.toDouble())
-        g.drawImage(Panel.loadingSpinner, centerX - 58, centerY - 58, null)
+        g.drawImage(ImageManager.loadingSpinner, centerX - 58, centerY - 58, null)
         g.transform = oldTransform
     }
 

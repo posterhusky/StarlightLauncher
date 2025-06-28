@@ -30,6 +30,7 @@ abstract class Button: Element() {
 
     open val isHovered get() = localMousePosition.x in x..x+w && localMousePosition.y in y..y+h
     var hoverProgress = 0.0
+    var shineProgress = 0.0
 
     val isActive get() = isHovered && (MouseListener.action as? NormalMouseAction)?.clickEligible ?: false
     var activeProgress = 0.0
@@ -54,28 +55,30 @@ abstract class Button: Element() {
 
         contentDraw(g, buttonShape)
 
-        if (hoverProgress <= 0.0 || isDisabled) return
+        if (isDisabled) return
 
-        if (isHovered) {
+        if (shineProgress % 1 > 0) {
             val oldComp = g.composite
 
             val k = (w*0.6).roundToInt()
-            val dx = (hoverProgress * (w + k)).roundToInt()
+            val dx = (shineProgress * (w + k)).roundToInt()
             for (i in 0 until k) {
                 val t = sin(i*Math.PI/k).toFloat()
                 g.composite = ShineComposite((t*0.9f).coerceIn(0f..0.9f))
                 val shineShape = Area(
                     Rectangle2D.Double(
-                    x - k + dx + i + 0.0,
-                    y.toDouble(),
-                    1.0,
-                    h.toDouble()
-                ))
+                        x - k + dx + i + 0.0,
+                        y.toDouble(),
+                        1.0,
+                        h.toDouble()
+                    ))
                 shineShape.intersect(Area(buttonShape))
                 g.fill(shineShape)
             }
             g.composite = oldComp
         }
+
+        if (hoverProgress <= 0) return
 
         g.color = Color(255, 255, 255, (20*hoverProgress).toInt())
         g.fill(getOutlineShape(9, 7))
@@ -117,6 +120,10 @@ abstract class Button: Element() {
         hoverProgress =
             if (isHovered) min(hoverProgress+0.1, 1.0)
             else max(hoverProgress-0.15, 0.0)
+
+        shineProgress =
+            if (isHovered) min(shineProgress+0.06, 1.0)
+            else 0.0
 
         activeProgress =
             if (isActive) min(activeProgress+0.2, 1.0)

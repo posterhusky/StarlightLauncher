@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "net.vanolex"
-version = "1.1-rc1"
+version = "1.2-rc1"
 
 var ktor_version = "3.1.0"
 var coroutines_version = "1.9.0-RC.2"
@@ -34,6 +34,10 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(21)
+}
+
+tasks.withType<JavaExec> {
+    jvmArgs = listOf("-Dsun.java2d.opengl=true")
 }
 
 tasks {

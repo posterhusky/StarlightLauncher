@@ -1,9 +1,7 @@
 package net.vanolex.graphics
 
-import net.vanolex.Panel
-import net.vanolex.Window
+import net.vanolex.ImageManager
 import java.awt.Graphics2D
-import java.awt.geom.Rectangle2D
 import java.awt.geom.RoundRectangle2D
 
 class Shade(val x: Int, val y: Int, val w: Int, val h: Int, val cornerRadius: Int): Element() {
@@ -20,7 +18,7 @@ class Shade(val x: Int, val y: Int, val w: Int, val h: Int, val cornerRadius: In
             )
         )
 
-        g.drawImage(Panel.backgroundBlur, 0, 0, null)
+        ImageManager.drawBackground(g, true)
 
         g.clip = oldClip
     }
