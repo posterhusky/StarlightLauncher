@@ -3,39 +3,46 @@ package net.vanolex.scenes
 import net.vanolex.fonts.titleFont
 import net.vanolex.fonts.paragraphFont
 import net.vanolex.fonts.paragraphFontItalic
+import net.vanolex.fonts.titleFontItalic
 import net.vanolex.graphics.*
 import net.vanolex.graphics.buttons.SolidButton
 import net.vanolex.graphics.elements.Text
 import net.vanolex.lang
 import java.awt.Color
 import java.awt.Image
+import kotlin.math.roundToInt
 
 object CompositionBuilder {
     fun buildDialogue(
-        title: String, lore: String, hasSpinner: Boolean = false,
+        title: String, lore: String, hasSpinner: Boolean = false, spinnerLore: (() -> String)? = null,
         primaryButtonText: String? = null, primaryButtonAction: (() -> Unit)? = null,
         secondaryButtonText: String? = null, secondaryButtonAction: (() -> Unit)? = null,
     ): Composition {
         val titleGlyph = titleFont.getGlyph(45, title, 540)
-        val loreElement = MultilineText(lore, paragraphFont, 540, 18, 230, 180)
+        val loreElement = MultilineText(lore, paragraphFont, 540, 18, 230, 140)
         val hasPBtn = primaryButtonText != null || primaryButtonAction != null
         val hasSBtn = secondaryButtonText != null || secondaryButtonAction != null
 
         val composition = Composition(
             Shade(200, 40, 600, 540, 40),
-            Text(titleGlyph, (1000-titleGlyph.width)/2, 90, Color.WHITE),
+            Text(titleGlyph, (1000-titleGlyph.width)/2, 75, Color.WHITE),
             loreElement,
         )
 
         if (hasSpinner) {
+            val centerY = (
+                    loreElement.y+loreElement.height +
+                            if (hasPBtn && hasSBtn) 415
+                            else 480
+                    )/2 - 25
+
             composition.addElements(
-                LoadingSpinner(500,
-                (
-                        loreElement.y+loreElement.height +
-                                if (hasPBtn && hasSBtn) 415
-                                else 480
-                        )/2 - 25
-            )
+                LoadingSpinner(500, centerY))
+            if (spinnerLore != null) composition.addElements(
+                DynamicText({titleFontItalic.getGlyph(35, spinnerLore(), 540)},
+                    {500 - titleFontItalic.getGlyph(35, spinnerLore(), 540).width/2},
+                    {centerY + 75}, Color.WHITE
+                )
             )
         }
 

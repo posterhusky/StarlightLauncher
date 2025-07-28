@@ -16,20 +16,20 @@ abstract class Card: Button() {
     abstract fun cardDraw(g: Graphics2D, cardShape: Area)
     abstract fun execAction()
 
-    override val w = 270
-    override val h = 170
+    override var w = 270
+    override var h = 170
 
     override val clickAction = {
         if (!isSelected) select()
         else execAction()
     }
 
-    override val isHovered get() = localMousePosition.x in max(65, x)..<min(935, x+w) && localMousePosition.y + offset in max(105 + offset, y)..<min(435 + offset, y+h)
+    override val isHovered get() = localMousePosition.x in max(65, x)..<min(935, x+w) && localMousePosition.y + yOffset in max(105 + yOffset, y)..<min(435 + yOffset, y+h)
 
-    override val offset
+    override val yOffset
         get() = parent.scrollOffset.roundToInt()
     override val isHidden: Boolean
-        get() = y - offset < -70 || y - offset > 440
+        get() = y - yOffset < -70 || y - yOffset > 440
 
     val isSelected: Boolean
         get() = parent.selectedCard == this
@@ -44,7 +44,7 @@ abstract class Card: Button() {
                 Area(
                     RoundRectangle2D.Double(
                         x.toDouble() + 3 + widthOffset,
-                        y.toDouble() + 3 + heightOffset,
+                        y.toDouble() + 3 + heightOffset - yOffset,
                         w.toDouble() - 6 - 2*widthOffset,
                         h.toDouble() - 6 - 2*heightOffset,
                         24.0,

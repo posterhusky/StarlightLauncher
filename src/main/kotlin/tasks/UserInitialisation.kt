@@ -55,11 +55,11 @@ class UserInitialisation: Task() {
 
         // Wait until response is 200 or an unexpected error happens
         while (true) {
-            delay(7000) // wait 7 sec
+            delay(9000) // wait 8 sec
             while (!Window.isFocused) {
-                delay(500) // wait 0.5 sec
+                delay(1000) // wait 1 sec
             }
-            delay(3000) // wait 3 sec
+            delay(1500) // wait 1.5 sec
             response = client.post("https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/token") {
                 headers {
                     append("Content-Type", "application/x-www-form-urlencoded")

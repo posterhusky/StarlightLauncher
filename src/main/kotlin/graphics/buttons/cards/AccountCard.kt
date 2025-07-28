@@ -16,12 +16,12 @@ import java.awt.image.BufferedImage
 import kotlin.math.min
 
 class AccountCard(
-    override val x: Int, override val y: Int, val account: Account, override val parent: CardScroller
+    override var x: Int, override var y: Int, val account: Account, override val parent: CardScroller
 ): Card() {
     override val selText = account.displayName
     override val buttonText = lang.launch
 
-    val profilePicture = ProfilePicture(x + 55, y + 65, account.profilePicture, 70, false)
+    val profilePicture = ProfilePicture(x + 55, y + 65 - yOffset, account.profilePicture, 70, false)
     val bgCol = getAverageColor(account.profilePicture)
     val textSize = min(30.0, (230/ archivoBlack.getGlyph(30-widthOffset, account.displayName.uppercase()).width)*30)
 
@@ -29,10 +29,13 @@ class AccountCard(
         val background = Area(cardShape)
         background.intersect(Area(Rectangle2D.Double(
             x.toDouble() + widthOffset,
-            y.toDouble() + heightOffset,
+            y.toDouble() + heightOffset - yOffset,
             w.toDouble() - 2*widthOffset,
             80.0 - heightOffset*0.53
         )))
+
+        profilePicture.yOffset = yOffset
+
         background.subtract(profilePicture.outerCircle)
 
         g.color = bgCol
@@ -42,7 +45,7 @@ class AccountCard(
 
         g.color = Color.WHITE
         val glyph = archivoBlack.getGlyph(textSize-widthOffset*0.4, account.displayName.uppercase())
-        g.drawGlyphVector(glyph.coreGlyph, x + 20f + widthOffset.toFloat()*0.93f, y + 135f + glyph.height/2 - heightOffset.toFloat()*0.87f)
+        g.drawGlyphVector(glyph.coreGlyph, x + 20f + widthOffset.toFloat()*0.93f, y + 135f + glyph.height/2 - heightOffset.toFloat()*0.87f - yOffset)
     }
 
     fun getAverageColor(image: BufferedImage): Color {

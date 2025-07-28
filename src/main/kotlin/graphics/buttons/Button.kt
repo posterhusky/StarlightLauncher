@@ -16,19 +16,19 @@ import kotlin.math.roundToInt
 import kotlin.math.sin
 
 abstract class Button: Element() {
-    abstract val x: Int
-    abstract val y: Int
-    abstract val w: Int
-    abstract val h: Int
+    abstract var x: Int
+    abstract var y: Int
+    abstract var w: Int
+    abstract var h: Int
     abstract val clickAction: () -> Unit
     abstract fun contentDraw(g: Graphics2D, buttonShape: Area)
 
-    open val offset: Int = 0
+    open val yOffset: Int = 0
     open val bgColor: Color = Color(0, 0, 0, 128)
     open val isHidden: Boolean = false
     open val isDisabled: Boolean = false
 
-    open val isHovered get() = localMousePosition.x in x..x+w && localMousePosition.y in y..y+h
+    open val isHovered get() = localMousePosition.x in x..x+w && localMousePosition.y + yOffset in y..y+h
     var hoverProgress = 0.0
     var shineProgress = 0.0
 
@@ -43,7 +43,7 @@ abstract class Button: Element() {
 
         val buttonShape = Area( RoundRectangle2D.Double(
             x + widthOffset,
-            y + heightOffset,
+            y + heightOffset - yOffset,
             w - 2*widthOffset,
             h - 2*heightOffset,
             30.0,
@@ -68,7 +68,7 @@ abstract class Button: Element() {
                 val shineShape = Area(
                     Rectangle2D.Double(
                         x - k + dx + i + 0.0,
-                        y.toDouble(),
+                        y.toDouble() - yOffset,
                         1.0,
                         h.toDouble()
                     ))
@@ -89,25 +89,25 @@ abstract class Button: Element() {
         g.fill(getOutlineShape(7, (3*hoverProgress).toInt()))
     }
 
-    fun getOutlineShape(offset: Int, thickness: Int): Area {
+    fun getOutlineShape(strokeOffset: Int, thickness: Int): Area {
         val baseShape = Area(
             RoundRectangle2D.Double(
-                x.toDouble() - offset + widthOffset,
-                y.toDouble() - offset + heightOffset,
-                w.toDouble() + 2*(offset - widthOffset),
-                h.toDouble() + 2*(offset - heightOffset),
-                30.0 + offset,
-                30.0  + offset
+                x.toDouble() - strokeOffset + widthOffset,
+                y.toDouble() - strokeOffset + heightOffset - yOffset,
+                w.toDouble() + 2*(strokeOffset - widthOffset),
+                h.toDouble() + 2*(strokeOffset - heightOffset),
+                30.0 + strokeOffset,
+                30.0  + strokeOffset
             )
         )
         val hollowSection = Area(
             RoundRectangle2D.Double(
-                x.toDouble() - offset + thickness + widthOffset,
-                y.toDouble() - offset + thickness + heightOffset,
-                w.toDouble() + 2*(offset - thickness - widthOffset),
-                h.toDouble() + 2*(offset - thickness - heightOffset),
-                30.0 + offset - thickness,
-                30.0  + offset - thickness
+                x.toDouble() - strokeOffset + thickness + widthOffset,
+                y.toDouble() - strokeOffset + thickness + heightOffset - yOffset,
+                w.toDouble() + 2*(strokeOffset - thickness - widthOffset),
+                h.toDouble() + 2*(strokeOffset - thickness - heightOffset),
+                30.0 + strokeOffset - thickness,
+                30.0  + strokeOffset - thickness
             )
         )
         baseShape.subtract(hollowSection)

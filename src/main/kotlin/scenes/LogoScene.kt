@@ -10,6 +10,7 @@ import net.vanolex.graphics.elements.ScreenFill
 import net.vanolex.graphics.elements.Text
 import net.vanolex.tasks.FindFortnite
 import net.vanolex.tasks.LoadConfig
+import net.vanolex.tasks.CheckUpdates
 import java.awt.Color
 import kotlin.math.abs
 
@@ -20,6 +21,7 @@ class LogoScene: Scene() {
 
     private val loadConfigTask = LoadConfig()
     private val findFortniteTask = FindFortnite()
+    private val checkUpdatesTask = CheckUpdates()
 
     override fun update() {
         if (loadConfigTask.status == Task.TaskStatus.WAITING) {
@@ -31,6 +33,7 @@ class LogoScene: Scene() {
 
         if (loadAccountsTask.status == Task.TaskStatus.WAITING) loadAccountsTask.launchTaskAsync()
         if (findFortniteTask.status == Task.TaskStatus.WAITING) findFortniteTask.launchTaskAsync()
+        if (config.checkUpdates && checkUpdatesTask.status == Task.TaskStatus.WAITING) checkUpdatesTask.launchTaskAsync()
     }
 
     override val composition: Composition
@@ -43,8 +46,13 @@ class LogoScene: Scene() {
             )
 
             if (sceneFrames120 > 560) {
+                if (checkUpdatesTask.status == Task.TaskStatus.IN_PROGRESS) return composition
+
+                val linkCandidate = checkUpdatesTask.updateLink
+                if (linkCandidate != null) Panel.scene = LauncherUpdate(linkCandidate, checkUpdatesTask.newVersionName)
                 if (findFortniteTask.status == Task.TaskStatus.SUCCESS) Panel.scene = MainMenuScene()
                 if (findFortniteTask.status == Task.TaskStatus.FAILED) Panel.scene = SelectFortniteDialogue()
+
 //                Panel.scene = SelectFortniteDialogue()
                 return composition
             }

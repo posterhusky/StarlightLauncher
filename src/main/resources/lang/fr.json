@@ -1,5 +1,5 @@
 {
-  "selectFile": "SÉLECTIONNER LE FICHIER",
+  "selectFile": "SÉLECTIONNER UN FICHIER",
   "launching": "LANCEMENT...",
   "unexpectedError": "ERREUR INATTENDUE",
   "unexpectedErrorLore": "Une erreur inattendue s'est produite lors du processus. Veuillez réessayer.",
@@ -25,5 +25,23 @@
   "savedLore": "Votre compte a été enregistré avec succès ! Vous pouvez maintenant aller dans le menu principal et lancer le jeu depuis là.",
   "refresh": "RAFRAÎCHIR",
   "loadingAccounts": "CHARGEMENT DES COMPTES...",
-  "selectAccount": "SÉLECTIONNEZ UN COMPTE :"
+  "selectAccount": "SÉLECTIONNEZ UN COMPTE :",
+  "updateFound": "MISE À JOUR DISPONIBLE",
+  "updateFoundLore": "Une nouvelle version de Starlight Launcher est disponible. Vous pouvez la télécharger et l'installer maintenant pour bénéficier des dernières fonctionnalités et corrections, ou ignorer cette mise à jour et continuer avec votre version actuelle. (Mise à jour de %s vers %t)",
+  "update": "METTRE À JOUR VERS %s",
+  "skip": "IGNORER",
+  "updating": "MISE À JOUR...",
+  "updatingLore": "La mise à jour est en cours de téléchargement. Une fois terminée, l'application redémarrera automatiquement.",
+  "selectFortniteLocation": "Sélectionner l'emplacement de Fortnite",
+  "exeFileFilter": "Fichiers exécutables",
+  "fortniteNotFound": "FORTNITE INTROUVABLE",
+  "findFortnite1": "Fortnite n'a pas pu être détecté automatiquement. Veuillez sélectionner le fichier \"FortniteLauncher.exe\" en cliquant sur le bouton SÉLECTIONNER UN FICHIER. Si vous ne connaissez pas son emplacement, vous trouverez des instructions sur les pages suivantes.",
+  "findFortnite2": "Ouvrez le lanceur Epic Games et sélectionnez \"Bibliothèque\" dans la barre latérale. Trouvez la carte Fortnite dans votre bibliothèque, cliquez sur les trois points à côté du titre du jeu, puis sélectionnez \"Gérer\" dans le menu contextuel.",
+  "findFortnite3": "Dans la fenêtre ouverte, cliquez sur l'icône de dossier dans la section \"Installation\". Une fenêtre de l'explorateur de fichiers s'ouvrira avec le dossier Fortnite. Copiez le chemin dans la barre de recherche en haut.",
+  "findFortnite4": "Retournez dans Starlight Launcher et cliquez sur le bouton \"SÉLECTIONNER UN FICHIER\". Dans la fenêtre de l'explorateur qui s'affiche, collez le chemin copié dans la barre de recherche et appuyez sur Entrée.",
+  "findFortnite5": "Allez dans FortniteGame > Binaries > Win64, sélectionnez le fichier \"FortniteLauncher.exe\" et cliquez sur \"Ouvrir\". Vous serez ensuite redirigé vers le menu principal.",
+  "error": "ERREUR",
+  "fileDoesntExist": "Une erreur s'est produite lors de l'ouverture du fichier : Le fichier que vous avez sélectionné n'existe plus. Veuillez réessayer.",
+  "wrongFile": "Une erreur s'est produite lors de l'ouverture du fichier : Le fichier sélectionné ne semble pas être le lanceur de Fortnite. Assurez-vous de sélectionner le fichier \"FortniteLauncher.exe\".",
+  "wrongPath": "Une erreur s'est produite lors de l'ouverture du fichier : Le fichier sélectionné ne semble pas se trouver dans le dossier Fortnite. Assurez-vous que le chemin se termine par \"Fortnite/FortniteGame/Binaries/Win64/FortniteLauncher.exe\"."
 }

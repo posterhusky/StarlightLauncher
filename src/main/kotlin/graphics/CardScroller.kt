@@ -40,18 +40,13 @@ class CardScroller(): Element() {
     ))
 
     override fun draw(g: Graphics2D) {
-        val oldTransform = g.transform
         val oldClip = g.clip
 
         g.clip = containerClip
         g.color = Color(0, 0, 0, 64)
         g.fill(containerClip)
 
-        g.transform = AffineTransform.getTranslateInstance(0.0, (-scrollOffset).roundToInt().toDouble())
-
         cardList.forEach { (it as Element).draw(g) }
-
-        g.transform = oldTransform
 
         if (scrollOffset > 0) {
             val opMod = min(scrollOffset/30.0, 1.0)
@@ -90,7 +85,7 @@ class CardScroller(): Element() {
 
     override fun onScroll(amount: Int) {
         if (!isHovered) return
-        scrollOffsetTarget += amount*15
+        scrollOffsetTarget += amount*20
         scrollOffsetTarget = max(min(scrollOffsetTarget, maxScroll), 0)
     }
 }

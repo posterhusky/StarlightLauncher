@@ -10,11 +10,7 @@ class LoadConfig : Task() {
 
             ktJson.decodeFromString<Config>(jsonText)
         } catch (e: Exception) {
-            Config(
-                "C:/Program Files/Epic Games/Fortnite/FortniteGame/Binaries/Win64/FortniteLauncher.exe",
-                false,
-                determineLang()
-            )
+            Config()
         }
         config.save()
         lang = generateLang()

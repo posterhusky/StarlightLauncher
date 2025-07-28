@@ -3,10 +3,8 @@ package net.vanolex
 
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import net.vanolex.scenes.LogoScene
 import kotlin.time.Duration.Companion.nanoseconds
 
 suspend fun main() = runBlocking {
@@ -21,8 +19,8 @@ suspend fun main() = runBlocking {
         if (now - lastFrame >= nanosPerFrame) {
             Panel.tick()
             lastFrame = now
-        } else if (now - lastFrame <= nanosPerFrame*0.9) {
-            delay(100000.nanoseconds)
+        } else if (now - lastFrame <= nanosPerFrame*0.7) {
+            delay(200000.nanoseconds)
         }
         // freeze while off focus
         while (!Window.isFocused && isRunning && !Panel.scene.isImportant) {

@@ -15,7 +15,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 class SolidButton(
-    override val x: Int, override val y: Int, override val w: Int, override val h: Int,
+    override var x: Int, override var y: Int, override var w: Int, override var h: Int,
     val text: () -> String, val style: Style, val isDisabled2: () -> Boolean = { false },
     override val clickAction: () -> Unit
 ): Button() {
